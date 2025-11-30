@@ -1,78 +1,105 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Talim Hub - Bepul O'zbekcha Kurslar</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talim Hub – Bepul O'zbekcha Kurslar</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
   <style>
-    .progress { height: 8px; }
-    .course-card:hover { transform: translateY(-8px); transition: 0.3s; }
+    .progress-bar { height: 12px; }
+    .course-card { transition: all 0.3s ease; }
+    .course-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 font-sans">
 
   <!-- Header -->
-  <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
-    <div class="container mx-auto px-4 py-6 flex justify-between items-center">
-      <h1 class="text-3xl font-bold">Talim Hub</h1>
-      <div class="space-x-6">
-        <a href="#" class="hover:underline">Kurslar</a>
-        <a href="#" class="hover:underline">Mening Progressim</a>
-        <a href="#" class="bg-white text-indigo-600 px-5 py-2 rounded-full font-bold hover:bg-gray-100">Kirish</a>
-      </div>
+  <header class="bg-gradient-to-r from-indigo-700 to-purple-800 text-white sticky top-0 z-50 shadow-xl">
+    <div class="container mx-auto px-6 py-5 flex justify-between items-center">
+      <h1 class="text-3xl font-bold tracking-wider">Talim Hub</h1>
+      <nav class="hidden md:flex space-x-10 text-lg">
+        <a href="#" class="hover:text-yellow-300 transition">Bosh sahifa</a>
+        <a href="#kurslar" class="hover:text-yellow-300 transition">Kurslar</a>
+        <a href="progress.html" class="hover:text-yellow-300 transition">Progress</a>
+        <a href="sertifikat.html" class="bg-yellow-400 text-indigo-900 px-6 py-3 rounded-full font-bold hover:bg-yellow-300 shadow-lg">Sertifikat</a>
+      </nav>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="bg-gradient-to-br from-indigo-500 to-purple-700 text-white py-20">
-    <div class="container mx-auto px-4 text-center">
-      <h2 class="text-5xl font-bold mb-4">Kelajak bugundan boshlanadi</h2>
-      <p class="text-xl mb-8">100% bepul, o‘zbek tilida, professional kurslar</p>
-      <button class="bg-yellow-400 text-gray-900 px-8 py-4 rounded-full text-lg font-bold hover:bg-yellow-300 shadow-lg">
-        Bepul boshlash →
-      </button>
+  <section class="bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-600 text-white py-32">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-6xl md:text-7xl font-extrabold mb-6 leading-tight">Bilim endi bepul va oson</h2>
+      <p class="text-2xl mb-10">O‘zbek tilida • Professional o‘qituvchilar • Sertifikat bilan</p>
+      <a href="#kurslar" class="bg-yellow-400 text-indigo-900 px-12 py-6 rounded-full text-2xl font-bold hover:bg-yellow-300 shadow-2xl inline-block">
+        Bepul boshlash
+      </a>
     </div>
   </section>
 
   <!-- Kurslar -->
-  <section class="py-16">
-    <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-12">Mashhur Kurslar</h2>
-      <div class="grid md:grid-cols-3 gap-8">
+  <section id="kurslar" class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+      <h2 class="text-5xl font-bold text-center mb-16 text-gray-800">Eng mashhur kurslar</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
 
-        <!-- Kurs 1 -->
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden course-card">
-          <img src="https://images.unsplash.com/photo-1516321310764-9f3c6d9b6d6f?w=800" alt="Python" class="w-full h-48 object-cover">
-          <div class="p-6">
-            <h3 class="text-2xl font-bold mb-2">Python Dasturlash 0 dan</h3>
-            <p class="text-gray-600 mb-4">50+ dars, 30+ loyiha, sertifikat bilan</p>
-            <div class="flex items-center text-sm text-gray-500 mb-4">
-              <span>12,847 o‘quvchi</span>
-              <span class="mx-2">•</span>
+        <a href="kurs-python.html" class="course-card bg-white rounded-3xl shadow-2xl overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=800" class="w-full h-64 object-cover">
+          <div class="p-8">
+            <h3 class="text-2xl font-bold text-indigo-700">Python Dasturlash 0 dan Pro</h3>
+            <p class="text-gray-600 mt-3">60+ dars • 40+ loyiha • Telegram botlar • AI</p>
+            <div class="flex justify-between mt-6 text-sm text-gray-500">
+              <span>28,491 o‘quvchi</span>
               <span class="text-yellow-500">★★★★★ 4.9</span>
             </div>
-            <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
-              <div class="bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full" style="width: 68%"></div>
-            </div>
-            <a href="kurs-python.html" class="block text-center bg-indigo-600 text-white py-3 rounded-lg font-bold hover:bg-indigo-700">
-              Davom ettirish →
-            </a>
+            <div class="progress-bar bg-gray-200 rounded-full mt-4"><div class="bg-gradient-to-r from-green-500 to-blue-600 h-full rounded-full" style="width: 72%"></div></div>
           </div>
-        </div>
+        </a>
 
-        <!-- Kurs 2 va 3 ni xohlasangiz qo‘shaman (hozircha bitta yetarli) -->
+        <a href="kurs-web.html" class="course-card bg-white rounded-3xl shadow-2xl overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800" class="w-full h-64 object-cover">
+          <div class="p-8">
+            <h3 class="text-2xl font-bold text-indigo-700">Web Dasturlash (HTML, CSS, JS)</h3>
+            <p class="text-gray-600 mt-3">To‘liq frontend + portfolio sayt</p>
+            <div class="flex justify-between mt-6 text-sm text-gray-500">
+              <span>19,238 o‘quvchi</span>
+              <span class="text-yellow-500">★★★★★ 4.8</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="kurs-ingliz.html" class="course-card bg-white rounded-3xl shadow-2xl overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800" class="w-full h-64 object-cover">
+          <div class="p-8">
+            <h3 class="text-2xl font-bold text-indigo-700">Ingliz tili A1 → C1</h3>
+            <p class="text-gray-600 mt-3">Speaking, Grammar, IELTS tayyorgarlik</p>
+          </div>
+        </a>
+
+        <a href="kurs-react.html" class="course-card bg-white rounded-3xl shadow-2xl overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800" class="w-full h-64 object-cover">
+          <div class="p-8">
+            <h3 class="text-2xl font-bold text-indigo-700">React.js + Next.js</h3>
+            <p class="text-gray-600 mt-3">Zamonaviy veb ilovalar</p>
+          </div>
+        </a>
+
+        <a href="kurs-uiux.html" class="course-card bg-white rounded-3xl shadow-2xl overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1562577308-9e669c8a7e56?w=800" class="w-full h-64 object-cover">
+          <div class="p-8">
+            <h3 class="text-2xl font-bold text-indigo-700">UI/UX Dizayn (Figma)</h3>
+            <p class="text-gray-600 mt-3">Professional dizayner bo‘ling</p>
+          </div>
+        </a>
+
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-12">
-    <div class="container mx-auto px-4 text-center">
-      <p class="text-2xl font-bold mb-4">Talim Hub</p>
-      <p>Barcha huquqlar himoyalangan © 2025</p>
-    </div>
+  <footer class="bg-gray-900 text-white py-16 text-center">
+    <p class="text-2xl font-bold">Talim Hub © 2025 | Barcha huquqlar himoyalangan</p>
+    <p class="mt-4">Made with ❤️ in Uzbekistan</p>
   </footer>
 </body>
 </html>
