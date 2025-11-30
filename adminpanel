@@ -3,31 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel | Talim Hub</title>
+  <title>Admin Panel</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-white min-h-screen">
-  <div class="container mx-auto px-6 py-12">
-    <h1 class="text-5xl font-bold text-center mb-12">Admin Panel</h1>
+  <div class="container mx-auto p-10">
+    <h1 class="text-6xl font-bold text-center mb-10">ADMIN PANEL</h1>
     <div class="grid md:grid-cols-3 gap-8">
-      <div class="bg-indigo-800 p-8 rounded-2xl text-center">
-        <h2 class="text-3xl font-bold">Jami o‘quvchilar</h2>
-        <p class="text-6xl mt-4">28,491</p>
+      <div class="bg-red-800 p-10 rounded-3xl text-center">
+        <p class="text-7xl font-bold">28,491</p>
+        <p class="text-2xl mt-4">Jami o‘quvchi</p>
       </div>
-      <div class="bg-green-800 p-8 rounded-2xl text-center">
-        <h2 class="text-3xl font-bold">Tugallangan kurslar</h2>
-        <p class="text-6xl mt-4">8,247</p>
+      <div class="bg-green-800 p-10 rounded-3xl text-center">
+        <p class="text-7xl font-bold">5,891</p>
+        <p class="text-2xl mt-4">Sertifikat berilgan</p>
       </div>
-      <div class="bg-purple-800 p-8 rounded-2xl text-center">
-        <h2 class="text-3xl font-bold">Berilgan sertifikatlar</h2>
-        <p class="text-6xl mt-4">5,891</p>
+      <div class="bg-purple-800 p-10 rounded-3xl text-center">
+        <p class="text-7xl font-bold">92%</p>
+        <p class="text-2xl mt-4">O‘rtacha progress</p>
       </div>
     </div>
-    <div class="mt-12 bg-gray-800 p-8 rounded-2xl">
-      <h2 class="text-3xl font-bold mb-6">So‘nggi faollik</h2>
-      <p>Barcha ma'lumotlar real vaqtda yangilanadi (keyingi bosqichda Firebase qo‘shiladi)</p>
-      <a href="/" class="mt-8 inline-block bg-yellow-400 text-black px-8 py-4 rounded-full font-bold text-xl">Bosh sahifaga qaytish</a>
-    </div>
+    <a href="/" class="block text-center mt-10 text-2xl bg-yellow-500 text-black py-4 rounded-full">Bosh sahifaga</a>
   </div>
+
+  <script>
+    if (sessionStorage.getItem('currentUser') !== 'admin1') {
+      alert("Siz admin emassiz!");
+      location.href = '/';
+    }
+  </script>
 </body>
 </html>
