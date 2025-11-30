@@ -6,78 +6,68 @@
   <title>Talim Hub – Bepul O'zbekcha Kurslar</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
-  <style>
-    .progress-bar { height: 12px; }
-    .course-card { transition: all 0.3s ease; }
-    .course-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
-  </style>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="bg-gray-50">
 
   <!-- Header -->
   <header class="bg-gradient-to-r from-indigo-700 to-purple-800 text-white sticky top-0 z-50 shadow-xl">
-    <div class="container mx-auto px-6 py-5 flex justify-between items-center">
-      <h1 class="text-3xl font-bold tracking-wider">Talim Hub</h1>
-      <nav class="hidden md:flex space-x-10 text-lg">
-        <a href="#" class="hover:text-yellow-300 transition">Bosh sahifa</a>
-        <a href="#kurslar" class="hover:text-yellow-300 transition">Kurslar</a>
-        <a href="progress.html" class="hover:text-yellow-300 transition">Progress</a>
-        <a href="sertifikat.html" class="bg-yellow-400 text-indigo-900 px-6 py-3 rounded-full font-bold hover:bg-yellow-300 shadow-lg">Sertifikat</a>
+    <div class="container mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center">
+      <h1 class="text-3xl font-bold">Talim Hub</h1>
+      <nav class="space-x-8 mt-4 md:mt-0 text-lg">
+        <a href="#" class="hover:text-yellow-300">Kurslar</a>
+        <a href="progress.html" class="hover:text-yellow-300">Progress</a>
+        <a href="sertifikat.html" class="bg-yellow-400 text-indigo-900 px-6 py-3 rounded-full font-bold">Sertifikat</a>
       </nav>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-600 text-white py-32">
-    <div class="container mx-auto px-6 text-center">
-      <h2 class="text-6xl md:text-7xl font-extrabold mb-6 leading-tight">Bilim endi bepul va oson</h2>
-      <p class="text-2xl mb-10">O‘zbek tilida • Professional o‘qituvchilar • Sertifikat bilan</p>
-      <a href="#kurslar" class="bg-yellow-400 text-indigo-900 px-12 py-6 rounded-full text-2xl font-bold hover:bg-yellow-300 shadow-2xl inline-block">
+  <section class="bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-600 text-white py-32 text-center">
+    <div class="container mx-auto px-6">
+      <h2 class="text-5xl md:text-7xl font-extrabold mb-6">Bilim endi bepul!</h2>
+      <p class="text-2xl mb-10">O‘zbek tilida • Sertifikat bilan • Professional</p>
+      <a href="#kurslar" class="bg-yellow-400 text-indigo-900 px-12 py-6 rounded-full text-2xl font-bold hover:bg-yellow-300 shadow-2xl">
         Bepul boshlash
       </a>
     </div>
   </section>
 
   <!-- Kurslar -->
-  <section id="kurslar" class="py-20 bg-white">
+  <section id="kurslar" class="py-20">
     <div class="container mx-auto px-6">
       <h2 class="text-5xl font-bold text-center mb-16 text-gray-800">Eng mashhur kurslar</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
 
-        <a href="kurs-python.html" class="course-card bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <a href="kurs-python.html" class="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition duration-300">
           <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=800" class="w-full h-64 object-cover">
           <div class="p-8">
             <h3 class="text-2xl font-bold text-indigo-700">Python Dasturlash 0 dan Pro</h3>
-            <p class="text-gray-600 mt-3">60+ dars • 40+ loyiha • Telegram botlar • AI</p>
-            <div class="flex justify-between mt-6 text-sm text-gray-500">
+            <p class="text-gray-600 mt-3">60+ dars • Telegram bot • AI loyihalar</p>
+            <div class="flex justify-between mt-6 text-sm">
               <span>28,491 o‘quvchi</span>
               <span class="text-yellow-500">★★★★★ 4.9</span>
             </div>
-            <div class="progress-bar bg-gray-200 rounded-full mt-4"><div class="bg-gradient-to-r from-green-500 to-blue-600 h-full rounded-full" style="width: 72%"></div></div>
+            <div class="w-full bg-gray-200 rounded-full h-4 mt-4"><div class="bg-gradient-to-r from-green-500 to-blue-600 h-4 rounded-full" style="width: 72%"></div></div>
           </div>
         </a>
 
-        <a href="kurs-web.html" class="course-card bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <a href="kurs-web.html" class="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition duration-300">
           <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800" class="w-full h-64 object-cover">
           <div class="p-8">
             <h3 class="text-2xl font-bold text-indigo-700">Web Dasturlash (HTML, CSS, JS)</h3>
-            <p class="text-gray-600 mt-3">To‘liq frontend + portfolio sayt</p>
-            <div class="flex justify-between mt-6 text-sm text-gray-500">
-              <span>19,238 o‘quvchi</span>
-              <span class="text-yellow-500">★★★★★ 4.8</span>
-            </div>
+            <p class="text-gray-600 mt-3">Portfolio sayt • Responsive dizayn</p>
           </div>
         </a>
 
-        <a href="kurs-ingliz.html" class="course-card bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <a href="kurs-ingliz.html" class="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition duration-300">
           <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800" class="w-full h-64 object-cover">
           <div class="p-8">
             <h3 class="text-2xl font-bold text-indigo-700">Ingliz tili A1 → C1</h3>
-            <p class="text-gray-600 mt-3">Speaking, Grammar, IELTS tayyorgarlik</p>
+            <p class="text-gray-600 mt-3">Speaking • Grammar • IELTS</p>
           </div>
         </a>
 
-        <a href="kurs-react.html" class="course-card bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <a href="kurs-react.html" class="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition duration-300">
           <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800" class="w-full h-64 object-cover">
           <div class="p-8">
             <h3 class="text-2xl font-bold text-indigo-700">React.js + Next.js</h3>
@@ -85,7 +75,7 @@
           </div>
         </a>
 
-        <a href="kurs-uiux.html" class="course-card bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <a href="kurs-uiux.html" class="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition duration-300">
           <img src="https://images.unsplash.com/photo-1562577308-9e669c8a7e56?w=800" class="w-full h-64 object-cover">
           <div class="p-8">
             <h3 class="text-2xl font-bold text-indigo-700">UI/UX Dizayn (Figma)</h3>
@@ -98,8 +88,7 @@
   </section>
 
   <footer class="bg-gray-900 text-white py-16 text-center">
-    <p class="text-2xl font-bold">Talim Hub © 2025 | Barcha huquqlar himoyalangan</p>
-    <p class="mt-4">Made with ❤️ in Uzbekistan</p>
+    <p class="text-2xl font-bold">Talim Hub © 2025</p>
   </footer>
 </body>
 </html>
