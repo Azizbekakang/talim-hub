@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | Talim Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+  <div class="container mx-auto px-6 py-12">
+    <h1 class="text-5xl font-bold text-center mb-12">Admin Panel</h1>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-indigo-800 p-8 rounded-2xl text-center">
+        <h2 class="text-3xl font-bold">Jami o‘quvchilar</h2>
+        <p class="text-6xl mt-4">28,491</p>
+      </div>
+      <div class="bg-green-800 p-8 rounded-2xl text-center">
+        <h2 class="text-3xl font-bold">Tugallangan kurslar</h2>
+        <p class="text-6xl mt-4">8,247</p>
+      </div>
+      <div class="bg-purple-800 p-8 rounded-2xl text-center">
+        <h2 class="text-3xl font-bold">Berilgan sertifikatlar</h2>
+        <p class="text-6xl mt-4">5,891</p>
+      </div>
+    </div>
+    <div class="mt-12 bg-gray-800 p-8 rounded-2xl">
+      <h2 class="text-3xl font-bold mb-6">So‘nggi faollik</h2>
+      <p>Barcha ma'lumotlar real vaqtda yangilanadi (keyingi bosqichda Firebase qo‘shiladi)</p>
+      <a href="/" class="mt-8 inline-block bg-yellow-400 text-black px-8 py-4 rounded-full font-bold text-xl">Bosh sahifaga qaytish</a>
+    </div>
+  </div>
+</body>
+</html>
