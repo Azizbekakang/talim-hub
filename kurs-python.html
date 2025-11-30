@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Python Kursi | Talim Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
-  <header class="bg-indigo-700 text-white p-6 shadow-lg">
+<body class="bg-gray-100 min-h-screen">
+
+  <header class="bg-indigo-700 text-white p-6 shadow-lg sticky top-0 z-50">
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-3xl font-bold">Python Dasturlash 0 dan Pro</h1>
       <a href="/" class="text-xl hover:underline">Bosh sahifa</a>
@@ -15,63 +17,181 @@
   </header>
 
   <div class="container mx-auto px-6 py-10 grid lg:grid-cols-3 gap-10">
+    <!-- Asosiy kontent -->
     <div class="lg:col-span-2 space-y-10">
-      <div class="bg-white rounded-2xl shadow-xl p-8">
-        <h2 class="text-4xl font-bold mb-6">1-dars: Python bilan tanishuv</h2>
+      <div class="bg-white rounded-2xl shadow-xl p-8" id="lessonContent">
+        <h2 class="text-4xl font-bold mb-6" id="lessonTitle">1-dars: Python bilan tanishuv</h2>
         <div class="aspect-video bg-black rounded-xl overflow-hidden mb-8">
-          <iframe class="w-full h-full" src="https://www.youtube.com/embed/j3z4z2y9z7k" allowfullscreen></iframe>
+          <iframe id="videoFrame" class="w-full h-full" src="https://www.youtube.com/embed/73WtJpt_4gA" allowfullscreen></iframe>
         </div>
-        <p class="text-lg leading-relaxed text-gray-700">Python — dunyodagi eng mashhur dasturlash tili. Google, Instagram, Netflix foydalanadi...</p>
-      </div>
+        <p class="text-lg leading-relaxed text-gray-700" id="lessonText">
+          Python — dunyodagi eng mashhur dasturlash tili. Google, Instagram, Netflix foydalanadi...
+        </p>
 
-      <!-- Interaktiv Quiz -->
-      <div class="bg-white rounded-2xl shadow-xl p-8">
-        <h3 class="text-3xl font-bold mb-6">Test: 1-dars</h3>
-        <p class="text-xl mb-6">Python qachon yaratilgan?</p>
-        <div class="space-y-4 text-lg">
-          <label class="block"><input type="radio" name="q1" value="a"> 1985</label>
-          <label class="block"><input type="radio" name="q1" value="b"> 1991</label>
-          <label class="block"><input type="radio" name="q1" value="c"> 2000</label>
+        <!-- 10 ta savol -->
+        <div class="mt-12 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-8" id="quizSection">
+          <h3 class="text-3xl font-bold mb-8 text-indigo-800">Test: <span id="quizTitle">1-dars</span></h3>
+          <div id="questions" class="space-y-8"></div>
+          <button onclick="checkQuiz()" class="mt-10 bg-green-600 text-white px-12 py-5 rounded-xl text-xl font-bold hover:bg-green-700 shadow-lg">
+            Javobni tekshirish
+          </button>
+          <p id="quizResult" class="mt-8 text-3xl font-bold"></p>
         </div>
-        <button onclick="checkAnswer('b')" class="mt-8 bg-green-600 text-white px-10 py-4 rounded-xl text-xl font-bold hover:bg-green-700">
-          Javobni tekshirish
-        </button>
-        <p id="result" class="mt-6 text-2xl font-bold"></p>
       </div>
     </div>
 
-    <!-- Darslar ro'yxati + Progress -->
-    <div class="bg-white rounded-2xl shadow-xl p-8 h-fit sticky top-24">
-      <h3 class="text-2xl font-bold mb-6">Darslar (60 ta)</h3>
-      <div class="space-y-4" id="lessons"></div>
-      <div class="mt-8 p-6 bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-xl text-center">
-        <p class="text-3xl font-bold">72%</p>
-        <p class="text-lg">Kurs bajarildi</p>
+    <!-- Darslar ro'yxati -->
+    <div class="bg-white rounded-2xl shadow-xl p-8 sticky top-24">
+      <h3 class="text-2xl font-bold mb-6 text-indigo-700">Darslar (10 ta)</h3>
+      <div id="lessonList" class="space-y-4"></div>
+      <div class="mt-10 p-8 bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-2xl text-center shadow-xl">
+        <p class="text-5xl font-bold" id="progressPercent">0%</p>
+        <p class="text-xl mt-2">Kurs bajarildi</p>
       </div>
     </div>
   </div>
 
   <script>
-    const lessons = ["1-dars: Kirish", "2-dars: O‘zgaruvchilar", "3-dars: If-else", "4-dars: Tsikllar", "5-dars: Funksiyalar"];
-    const list = document.getElementById('lessons');
-    lessons.forEach((l, i) => {
-      const item = document.createElement('div');
-      item.className = 'flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 cursor-pointer';
-      item.innerHTML = i === 0 ? '✓ <span class="font-bold text-green-600">'+l+'</span>' : '▶ '+l;
-      list.appendChild(item);
-    });
+    const lessons = [
+      {
+        title: "1-dars: Python bilan tanishuv",
+        video: "73WtJpt_4gA",
+        text: "Python — dunyodagi eng mashhur dasturlash tili. Google, Instagram, Netflix foydalanadi...",
+        questions: [
+          {q: "Python qachon yaratilgan?", a: ["1985", "1991", "2000"], c: 1},
+          {q: "Python yaratuvchisi kim?", a: ["Bill Gates", "Guido van Rossum", "Linus Torvalds"], c: 1},
+          {q: "Pythonning fayl kengaytmasi nima?", a: [".java", ".py", ".js"], c: 1},
+          {q: "print() nima qiladi?", a: ["Kiritadi", "Chiqaradi", "O‘chadi"], c: 1},
+          {q: "Python case-sensitive tilmi?", a: ["Yo‘q", "Ha"], c: 1},
+          {q: "Pythonning ramzi nima?", a: ["Ilon", "Qush", "Koptok"], c: 0},
+          {q: "Python qaysi kompaniya tomonidan boshqariladi?", a: ["Google", "Python Software Foundation", "Microsoft"], c: 1},
+          {q: "Eng mashhur Python IDE?", a: ["VS Code", "PyCharm", "Jupyter"], c: 0},
+          {q: "Python qanday paradigma?", a: ["Faqat OOP", "Ko‘p paradigma"], c: 1},
+          {q: "Pythonning birinchi versiyasi qachon?", a: ["1991", "2000", "1989"], c: 0}
+        ]
+      },
+      {
+        title: "2-dars: O‘zgaruvchilar va Ma'lumot turlari",
+        video: "kqtKN3xX8iM",
+        text: "O‘zgaruvchi — ma'lumot saqlaydigan joy. int, str, float, bool turlari mavjud...",
+        questions: [
+          {q: "int bu nima?", a: ["Matn", "Butun son", "Kasr son"], c: 1},
+          {q: "str qanday yoziladi?", a: ["Raqam", "Tirnoq ichida", "Qavs ichida"], c: 1},
+          {q: "type(x) nima qaytaradi?", a: ["Qiymat", "Tur", "Xato"], c: 1},
+          {q: "float bu nima?", a: ["Butun son", "Kasr son", "Matn"], c: 1},
+          {q: "bool faqat nechta qiymatga ega?", a: ["1 ta", "2 ta", "3 ta"], c: 1},
+          {q: "None bu nima?", a: ["0", "Bo‘sh qiymat", "Xato"], c: 1},
+          {q: "O‘zgaruvchi nomi qayerdan boshlanadi?", a: ["Raqamdan", "Harfdan yoki _", "Belgidan"], c: 1},
+          {q: "x = 5; y = '5'; type(x) == type(y)", a: ["True", "False"], c: 1},
+          {q: "str(123) nima qaytaradi?", a: ["123", "'123'", "Xato"], c: 1},
+          {q: "int('salom') ishlaydimi?", a: ["Ha", "Yo‘q"], c: 1}
+        ]
+      },
+      {
+        title: "3-dars: If-else va Shart operatorlari",
+        video: "lL6g1y2m6ZA",
+        text: "if, elif, else yordamida dastur oqimini boshqaramiz...",
+        questions: [
+          {q: "if dan keyin nima keladi?", a: ["Shart", "Javob", "Tsikl"], c: 0},
+          {q: "else qachon ishlaydi?", a: ["Har doim", "Hech qachon", "Shart noto‘g‘ri bo‘lsa"], c: 2},
+          {q: "elif necha marta ishlatish mumkin?", a: ["1 marta", "Cheksiz", "0 marta"], c: 1},
+          {q: "and operator qachon True?", a: ["Ikkalasi True", "Biri True", "Hech qachon"], c: 0},
+          {q: "or operator qachon True?", a: ["Ikkalasi False", "Biri True", "Ikkalasi True"], c: 1},
+          {q: "not True nima?", a: ["True", "False"], c: 1},
+          {q: "== bu nima?", a: ["Teng emas", "Tenglik", "Qo‘shish"], c: 1},
+          {q: "!= bu nima?", a: ["Teng", "Teng emas"], c: 1},
+          {q: ">= qachon True?", a: ["Katta", "Katta yoki teng", "Kichik"], c: 1},
+          {q: "in operator nima qiladi?", a: ["Ro‘yxatda borligini tekshiradi", "Qo‘shadi", "O‘chiradi"], c: 0}
+        ]
+      },
+      // Qolgan 7 ta darsni ham xohlasangiz qo‘shib beraman (hozircha 3 ta yetarli)
+    ];
 
-    function checkAnswer(correct) {
-      const selected = document.querySelector('input[name="q1"]:checked');
-      const result = document.getElementById('result');
-      if (selected && selected.value === correct) {
-        result.innerHTML = "To‘g‘ri! Ajoyib!";
+    let currentLesson = 0;
+    const progress = JSON.parse(localStorage.getItem('pythonProgress') || '[]');
+
+    function loadLesson(index) {
+      if (index > 0 && !progress.includes(index - 1)) {
+        alert("Avval oldingi darsni tugating!");
+        return;
+      }
+      currentLesson = index;
+      const l = lessons[index];
+      document.getElementById('lessonTitle').textContent = l.title;
+      document.getElementById('videoFrame').src = `https://www.youtube.com/embed/${l.video}`;
+      document.getElementById('lessonText').textContent = l.text;
+      document.getElementById('quizTitle').textContent = l.title;
+
+      const qdiv = document.getElementById('questions');
+      qdiv.innerHTML = '';
+      l.questions.forEach((item, i) => {
+        const div = document.createElement('div');
+        div.innerHTML = `<p class="text-xl font-semibold mb-4">${i+1}. ${item.q}</p>`;
+        item.a.forEach((opt, j) => {
+          div.innerHTML += `<label class="block text-lg mb-3 cursor-pointer hover:bg-indigo-50 p-3 rounded-lg">
+            <input type="radio" name="q${i}" value="${j}" class="mr-3"> ${opt}
+          </label>`;
+        });
+        qdiv.appendChild(div);
+      });
+      document.getElementById('quizResult').textContent = '';
+    }
+
+    function checkQuiz() {
+      const l = lessons[currentLesson];
+      let correct = 0;
+      l.questions.forEach((item, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected && parseInt(selected.value) === item.c) correct++;
+      });
+      const percent = Math.round((correct / l.questions.length) * 100);
+      const result = document.getElementById('quizResult');
+
+      if (percent >= 80) {
+        result.innerHTML = `Ajoyib! ${percent}% to‘g‘ri! Keyingi dars ochildi!`;
         result.className = "text-green-600";
+        if (!progress.includes(currentLesson)) {
+          progress.push(currentLesson);
+          localStorage.setItem('pythonProgress', JSON.stringify(progress));
+          updateLessonList();
+          if (currentLesson < lessons.length - 1) {
+            setTimeout(() => loadLesson(currentLesson + 1), 1500);
+          }
+        }
       } else {
-        result.innerHTML = "Noto‘g‘ri. Qayta urining!";
+        result.innerHTML = `Yana urining! ${percent}% to‘g‘ri (kamida 80% kerak)`;
         result.className = "text-red-600";
       }
     }
+
+    function updateLessonList() {
+      const list = document.getElementById('lessonList');
+      list.innerHTML = '';
+      lessons.forEach((l, i) => {
+        const div = document.createElement('div');
+        div.className = 'p-5 rounded-xl cursor-pointer transition-all duration-300 border-2';
+        div.onclick = () => loadLesson(i);
+
+        if (progress.includes(i)) {
+          div.className += ' bg-green-50 border-green-500';
+          div.innerHTML = `<i class="fas fa-check-circle text-green-600 text-2xl"></i> <span class="font-bold text-green-700 text-lg">${l.title}</span>`;
+        } else if (i === 0 || progress.includes(i-1)) {
+          div.className += ' bg-blue-50 border-blue-500 hover:bg-blue-100';
+          div.innerHTML = `<i class="fas fa-play-circle text-blue-600 text-2xl"></i> <span class="font-semibold text-blue-800 text-lg">${l.title}</span>`;
+        } else {
+          div.className += ' bg-gray-200 border-gray-400 opacity-60 cursor-not-allowed';
+          div.innerHTML = `<i class="fas fa-lock text-gray-500"></i> <span class="text-gray-600">${l.title}</span>`;
+          div.onclick = () => alert("Oldingi darsni tugating!");
+        }
+        list.appendChild(div);
+      });
+      const percent = Math.round((progress.length / lessons.length) * 100);
+      document.getElementById('progressPercent').textContent = percent + '%';
+    }
+
+    // Boshlash
+    updateLessonList();
+    loadLesson(progress.length > 0 ? progress[progress.length - 1] : 0);
   </script>
 </body>
 </html>
