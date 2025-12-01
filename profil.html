@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uz"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profil | Talim Hub</title><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-gradient-to-br from-indigo-900 to-purple-900 min-h-screen text-white p-6">
+<div class="container mx-auto max-w-2xl">
+  <h1 class="text-5xl font-bold text-center mb-10 text-yellow-400">SIZNING PROFILINGIZ</h1>
+  <div class="bg-white/10 backdrop-blur-xl rounded-3xl p-10 shadow-2xl">
+    <p class="text-2xl mb-4">ID: <span id="id" class="text-yellow-300 font-bold"></span></p>
+    <input id="name" placeholder="Ism" class="w-full p-4 mb-4 rounded-xl bg-white/20">
+    <input id="phone" placeholder="Telefon" class="w-full p-4 mb-4 rounded-xl bg-white/20">
+    <input id="email" placeholder="Email" class="w-full p-4 mb-8 rounded-xl bg-white/20">
+    <button onclick="saveProfile()" class="w-full bg-yellow-400 text-black py-5 rounded-xl text-2xl font-bold">SAQLASH</button>
+    <a href="index.html" class="block text-center mt-6 text-xl hover:underline">Bosh sahifa</a>
+  </div>
+</div>
+
+<script>
+const user = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+if(!user.id) location.href='login.html';
+document.getElementById('id').textContent = user.id;
+document.getElementById('name').value = user.name || '';
+document.getElementById('phone').value = user.phone || '';
+document.getElementById('email').value = user.email || '';
+
+function saveProfile(){
+  const updated = {
+    ...user,
+    name: document.getElementById('name').value,
+    phone: document.getElementById('phone').value,
+    email: document.getElementById('email').value
+  };
+  let all = JSON.parse(localStorage.getItem('talimhub_users')||'[]');
+  const idx = all.findIndex(u=>u.id==user.id);
+  if(idx>-1) all[idx]=updated;
+  localStorage.setItem('talimhub_users',JSON.stringify(all));
+  sessionStorage.setItem('currentUser',JSON.stringify(updated));
+  alert("Profil yangilandi!");
+}
+</script>
+</body></html>
