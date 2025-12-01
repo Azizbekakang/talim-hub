@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="uz"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kirish | Ta'lim Hub</title><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-gradient-to-br from-purple-900 to-indigo-900 min-h-screen flex items-center justify-center">
+<div class="bg-white/10 backdrop-blur-lg rounded-3xl p-12 w-full max-w-md text-white shadow-2xl">
+  <h1 class="text-5xl font-bold text-center mb-10 text-yellow-400">TALIM HUB</h1>
+  <input id="name" placeholder="Ism" class="w-full p-4 mb-4 rounded-xl bg-white/20">
+  <input id="phone" placeholder="+998" class="w-full p-4 mb-4 rounded-xl bg-white/20">
+  <input id="email" placeholder="Email" class="w-full p-4 mb-4 rounded-xl bg-white/20">
+  <input id="pass" type="password" placeholder="Parol" class="w-full p-4 mb-8 rounded-xl bg-white/20">
+  <button onclick="reg()" class="w-full bg-yellow-400 text-black py-5 rounded-xl text-2xl font-bold mb-4">RO‘YXATDAN O‘TISH</button>
+  <button onclick="log()" class="w-full bg-green-600 py-5 rounded-xl text-2xl font-bold">KIRISH</button>
+  <p class="text-center mt-6 text-sm">Iltimos kiring yoki ro'yhatdan o'ting</p>
+</div>
+
+<script>
+let users = JSON.parse(localStorage.getItem('talimhub_users')||'[]');
+function reg(){
+  let n=document.getElementById('name').value, p=document.getElementById('phone').value,
+      e=document.getElementById('email').value, ps=document.getElementById('pass').value;
+  if(!n||!p||!e||!ps) return alert("Hamma maydon to‘ldirilsin!");
+  let id = Math.floor(100000+Math.random()*900000);
+  users.push({id,name:n,phone:p,email:e,pass:ps,role:'user'});
+  localStorage.setItem('talimhub_users',JSON.stringify(users));
+  sessionStorage.setItem('user',JSON.stringify({id,name:n}));
+  alert("Muvaffaqiyatli! ID: "+id);
+  location.href='index.html';
+}
+function log(){
+  let e=document.getElementById('email').value, p=document.getElementById('pass').value;
+  let u = users.find(x=>x.email===e && x.pass===p) || (e==='admin1'&&p==='admin_ploi'?{role:'admin'}:null);
+  if(u){ sessionStorage.setItem('user',JSON.stringify(u)); location.href='index.html'; }
+  else alert("Xato!");
+}
+if(e==='admin1'&&p==='admin_ploi') location.href='adminpanel.html';
+}
+</script>
+</body></html>
