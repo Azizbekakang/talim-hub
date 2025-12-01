@@ -1,40 +1,113 @@
-<!DOCTYPE html><html lang="uz"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kirish | Ta'lim Hub</title><script src="https://cdn.tailwindcss.com"></script></head>
-<body class="bg-gradient-to-br from-indigo-900 to-purple-900 min-h-screen flex items-center justify-center">
-<div class="bg-white/10 backdrop-blur-lg rounded-3xl p-12 w-full max-w-md text-white shadow-2xl">
-  <h1 class="text-5xl font-bold text-center mb-10 text-yellow-400">TALIM HUB</h1>
-  <input id="name" placeholder="Ismingiz" class="w-full p-4 mb-4 rounded-xl bg-white/20 text-white placeholder-white/70">
-  <input id="phone" placeholder="+998" class="w-full p-4 mb-4 rounded-xl bg-white/20 text-white">
-  <input id="email" placeholder="Email" class="w-full p-4 mb-4 rounded-xl bg-white/20 text-white">
-  <input id="pass" type="password" placeholder="Parol" class="w-full p-4 mb-8 rounded-xl bg-white/20 text-white">
-  <button onclick="register()" class="w-full bg-yellow-400 text-black py-5 rounded-xl text-2xl font-bold mb-4 hover:bg-yellow-300">RO‘YXATDAN O‘TISH</button>
-  <button onclick="login()" class="w-full bg-green-600 py-5 rounded-xl text-2xl font-bold hover:bg-green-500">KIRISH</button>
-  <p class="text-center mt-6 text-sm opacity-80"></p>
-</div>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kirish | Talim Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 min-h-screen flex items-center justify-center p-4">
 
-<script>
-let users = JSON.parse(localStorage.getItem('talimhub_users')||'[]');
-function register(){
-  const name = document.getElementById('name').value;
-  const phone = document.getElementById('phone').value;
-  const email = document.getElementById('email').value;
-  const pass = document.getElementById('pass').value;
-  if(!name||!phone||!email||!pass) return alert("Barcha maydonlar to‘ldirilsin!");
-  const id = Math.floor(100000 + Math.random() * 900000);
-  users.push({id, name, phone, email, pass, role:'user', progress:{}});
-  localStorage.setItem('talimhub_users', JSON.stringify(users));
-  sessionStorage.setItem('user', JSON.stringify({id, name}));
-  alert(`Muvaffaqiyatli! Sizning ID: ${id}`);
-  location.href = 'index.html';
-}
-function login(){
-  const email = document.getElementById('email').value;
-  const pass = document.getElementById('pass').value;
-  const user = users.find(u => u.email===email && u.pass===pass) || (email==='admin1' && pass==='admin_ploi' ? {role:'admin'} : null);
-  if(user){
-    sessionStorage.setItem('user', JSON.stringify(user));
-    location.href = user.role==='admin' ? 'adminpanel.html' : 'index.html';
-  } else alert("Login yoki parol xato!");
-}
-</script>
-</body></html>
+  <div class="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl p-10 w-full max-w-md text-white">
+    <h1 class="text-5xl font-bold text-center mb-2 text-yellow-400">TALIM HUB</h1>
+    <p class="text-center mb-10 text-lg opacity-90">Bilim endi qo‘lingizda</p>
+
+    <input type="text" id="name" placeholder="Ismingiz" class="w-full p-4 mb-4 rounded-xl bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-4 focus:ring-yellow-400">
+    <input type="text" id="phone" placeholder="+998 XX XXX XX XX" class="w-full p-4 mb-4 rounded-xl bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-4 focus:ring-yellow-400">
+    <input type="email" id="email" placeholder="Email kiriting" class="w-full p-4 mb-4 rounded-xl bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-4 focus:ring-yellow-400">
+    <input type="password" id="pass" placeholder="Parol" class="w-full p-4 mb-8 rounded-xl bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-4 focus:ring-yellow-400">
+
+    <button onclick="register()" class="w-full bg-yellow-400 text-black font-bold py-5 rounded-xl text-2xl hover:bg-yellow-300 transition shadow-lg mb-4">
+      RO‘YXATDAN O‘TISH
+    </button>
+    <button onclick="login()" class="w-full bg-green-600 text-white font-bold py-5 rounded-xl text-2xl hover:bg-green-500 transition shadow-lg">
+      KIRISH
+    </button>
+
+    <p class="text-center mt-6 text-sm opacity-70">
+      Admin kirish: <span class="text-yellow-300">admin1</span> | <span class="text-yellow-300">admin_ploi</span>
+    </p>
+  </div>
+
+  <script>
+    // Barcha foydalanuvchilar
+    let users = JSON.parse(localStorage.getItem('talimhub_users') || '[]');
+
+    // Ro‘yxatdan o‘tish
+    function register() {
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const pass = document.getElementById('pass').value;
+
+      if (!name || !phone || !email || !pass) {
+        alert("Iltimos, barcha maydonlarni to‘ldiring!");
+        return;
+      }
+
+      // Email allaqachon borligini tekshirish
+      if (users.find(u => u.email === email)) {
+        alert("Bu email allaqachon ro‘yxatdan o‘tgan!");
+        return;
+      }
+
+      // 6 xonali unikal ID yaratish
+      const id = Math.floor(100000 + Math.random() * 900000);
+
+      // Yangi foydalanuvchi qo‘shish
+      users.push({
+        id: id,
+        name: name,
+        phone: phone,
+        email: email,
+        pass: pass,
+        role: "user",
+        joined: new Date().toLocaleDateString('uz-UZ')
+      });
+
+      localStorage.setItem('talimhub_users', JSON.stringify(users));
+      sessionStorage.setItem('currentUser', JSON.stringify({id, name, email, role: "user"}));
+
+      alert(`Tabriklaymiz, ${name}!\nSiz muvaffaqiyatli ro‘yxatdan o‘tdingiz!\nSizning ID: ${id}`);
+      location.href = "index.html";
+    }
+
+    // Kirish
+    function login() {
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const pass = document.getElementById('pass').value;
+
+      if (!email || !pass) {
+        alert("Email va parolni kiriting!");
+        return;
+      }
+
+      // Oddiy foydalanuvchi
+      const user = users.find(u => u.email === email && u.pass === pass);
+
+      // Admin tekshiruvi
+      if (email === "admin1" && pass === "admin_ploi") {
+        sessionStorage.setItem('currentUser', JSON.stringify({name: "Admin", email: "admin1", role: "admin"}));
+        location.href = "adminpanel.html";
+        return;
+      }
+
+      if (user) {
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
+        alert(`Xush kelibsiz, ${user.name}!`);
+        location.href = "index.html";
+      } else {
+        alert("Email yoki parol noto‘g‘ri!");
+      }
+    }
+
+    // Sahifa yuklanganda avto kirish (agar oldin kirgan bo‘lsa)
+    window.onload = function() {
+      if (sessionStorage.getItem('currentUser')) {
+        location.href = "index.html";
+      }
+    }
+  </script>
+</body>
+</html>
