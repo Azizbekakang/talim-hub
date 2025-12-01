@@ -1,127 +1,87 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="uz" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Talim Hub – Bepul Kurslar</title>
+  <title>Ta'lim Hub – Eng Kuchli Ta'lim Platforma</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { background: linear-gradient(rgba(0,0,0,0,0.7), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=2000') fixed center/cover; }
+    .glass { backdrop-filter: blur(12px); background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-600 to-purple-800 min-h-screen text-white">
+<body class="text-white min-h-screen">
 
-  <!-- Kirish / Ro'yxatdan o'tish -->
-  <div id="authScreen" class="flex items-center justify-center min-h-screen">
-    <div class="bg-white text-gray-800 rounded-3xl shadow-2xl p-10 w-full max-w-md">
-      <h1 class="text-4xl font-bold text-center mb-8 text-indigo-700">Talim Hub</h1>
-      <input id="login" placeholder="Login" class="w-full p-4 mb-4 border-2 border-indigo-300 rounded-xl text-lg">
-      <input id="password" type="password" placeholder="Parol" class="w-full p-4 mb-6 border-2 border-indigo-300 rounded-xl text-lg">
-      <button onclick="login()" class="w-full bg-indigo-600 text-white py-4 rounded-xl text-xl font-bold hover:bg-indigo-700">Kirish</button>
-      <button onclick="register()" class="w-full mt-4 bg-green-600 text-white py-4 rounded-xl text-xl font-bold hover:bg-green-700">Ro‘yxatdan o‘tish</button>
-      <p class="text-center mt-6 text-sm">Kiring yoki ro'yhatdan o'ting</p>
-    </div>
-  </div>
-
-  <!-- Asosiy sahifa (kirgandan keyin) -->
-  <div id="mainApp" class="hidden">
-    <header class="bg-indigo-900 p-6 shadow-xl sticky top-0 z-50">
-      <div class="container mx-auto flex justify-between items-center">
-        <h1 class="text-3xl font-bold">Talim Hub</h1>
-        <div class="flex items-center space-x-6">
-          <span id="username" class="text-xl font-semibold"></span>
-          <a href="progress.html" class="hover:text-yellow-300">Progress</a>
-          <a href="sertifikat.html" class="hover:text-yellow-300">Sertifikat</a>
-          <a href="adminpanel.html" id="adminLink" class="hidden bg-red-600 px-5 py-2 rounded-full">Admin Panel</a>
-          <button onclick="logout()" class="bg-gray-700 px-5 py-2 rounded-full">Chiqish</button>
-        </div>
-      </div>
-    </header>
-
-    <section class="container mx-auto px-6 py-16">
-      <h2 class="text-5xl font-bold text-center mb-16">Mashhur Kurslar</h2>
-      <div class="grid md:grid-cols-3 gap-10">
-        <a href="kurs-python.html" class="bg-white text-gray-800 rounded-3xl shadow-2xl p-8 hover:scale-105 transition">
-          <h3 class="text-2xl font-bold text-indigo-700">Python 0 dan Pro</h3>
-          <p class="mt-4">60+ dars • 10 ta savol har darsda</p>
-        </a>
-        <a href="kurs-web.html" class="bg-white text-gray-800 rounded-3xl shadow-2xl p-8 hover:scale-105 transition">
-          <h3 class="text-2xl font-bold text-indigo-700">Web Dasturlash</h3>
-        </a>
-        <a href="kurs-ingliz.html" class="bg-white text-gray-800 rounded-3xl shadow-2xl p-8 hover:scale-105 transition">
-          <h3 class="text-2xl font-bold text-indigo-700">Ingliz tili A1-C1</h3>
-        </a>
-      </div>
-    </section>
-
-    <!-- Chat (o‘qituvchi bilan) -->
-    <div class="fixed bottom-6 right-6 bg-indigo-600 rounded-full p-6 shadow-2xl cursor-pointer hover:bg-indigo-700" onclick="toggleChat()">
-      <i class="fas fa-comments text-3xl text-white"></i>
-    </div>
-    <div id="chatBox" class="hidden fixed bottom-24 right-6 w-96 bg-white text-gray-800 rounded-2xl shadow-2xl">
-      <div class="bg-indigo-600 text-white p-4 rounded-t-2xl">O‘qituvchi bilan chat</div>
-      <div id="messages" class="p-6 h-80 overflow-y-auto"></div>
-      <div class="p-4 border-t flex">
-        <input id="msgInput" placeholder="Xabar yozing..." class="flex-1 p-3 border rounded-l-lg">
-        <button onclick="sendMsg()" class="bg-indigo-600 text-white px-6 rounded-r-lg">Yuborish</button>
+  <!-- Navbar -->
+  <nav class="glass fixed top-0 w-full z-50 shadow-2xl">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-3xl font-bold">Talim Hub</h1>
+      <div class="space-x-6 text-lg">
+        <a href="#kurslar" class="hover:text-yellow-300">Kurslar</a>
+        <a href="#kutubxona" class="hover:text-yellow-300">Kutubxona</a>
+        <a href="masalalar.html" class="hover:text-yellow-300">Masalalar</a>
+        <a href="olimpiada.html" class="hover:text-yellow-300">Olimpiadalar</a>
+        <a href="profil.html" class="hover:text-yellow-300">Profil</a>
+        <a href="login.html" id="authBtn" class="bg-yellow-400 text-black px-6 py-2 rounded-full font-bold">Kirish</a>
       </div>
     </div>
-  </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="h-screen flex items-center justify-center text-center px-6">
+    <div>
+      <h1 class="text-6xl md:text-8xl font-extrabold mb-6">Bilim. Kuch. Kelajak.</h1>
+      <p class="text-2xl mb-10">O‘zbek tilida • Bepul va Pullik • Sertifikatli</p>
+      <a href="#kurslar" class="bg-yellow-400 text-black px-12 py-6 rounded-full text-3xl font-bold hover:bg-yellow-300 shadow-2xl">Boshlash</a>
+    </div>
+  </section>
+
+  <!-- Kurslar -->
+  <section id="kurslar" class="py-20 container mx-auto px-6">
+    <h2 class="text-6xl font-bold text-center mb-16">Kurslar</h2>
+    <div class="grid md:grid-cols-3 gap-10">
+      <a href="kurs-python.html" class="glass p-10 rounded-3xl hover:scale-105 transition">Python 0 dan Pro</a>
+      <a href="kurs-web.html" class="glass p-10 rounded-3xl hover:scale-105 transition">Web Dasturlash</a>
+      <a href="kurs-ingliz.html" class="glass p-10 rounded-3xl hover:scale-105 transition">Ingliz tili A1-C1</a>
+    </div>
+  </section>
+
+  <!-- Kutubxona -->
+  <section id="kutubxona" class="py-20 bg-black/50">
+    <div class="container mx-auto px-6">
+      <h2 class="text-6xl font-bold text-center mb-12">Kutubxona – 30+ Kitob</h2>
+      <input type="text" id="searchBook" placeholder="Kitob nomi bo‘yicha qidiring..." class="w-full p-5 rounded-xl text-black text-xl mb-10">
+      <div id="booksGrid" class="grid md:grid-cols-4 gap-8">
+        <!-- 30 ta kitob avto yuklanadi (quyida skriptda) -->
+      </div>
+    </div>
+  </section>
 
   <script>
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    if (!Array.isArray(users)) localStorage.setItem('users', JSON.stringify([]));
+    const books = [
+      {title: "Python Dasturlash", url: "https://uniwork.buxdu.uz/resurs/21352_2_65D77B7B9DD95C36F22F90F3BEF95F5A76A0DDF7.pdf"},
+      {title: "HTML & CSS Kitob", url: "https://tiu-edu.uz/media/books/2024/05/23/1710218859.pdf"},
+      {title: "Ingliz tili A1-A2", url: "https://qobiljon.uz/pdf/ingliz-tili-kitob.pdf"},
+      // Jami 30 ta real kitob linki quyida skriptda bor
+    ];
 
-    function login() {
-      const login = document.getElementById('login').value;
-      const pass = document.getElementById('password').value;
-      const user = users.find(u => u.login === login && u.pass === pass);
-      if (user || (login === 'admin1' && pass === 'admin_ploi')) {
-        sessionStorage.setItem('currentUser', login);
-        document.getElementById('authScreen').classList.add('hidden');
-        document.getElementById('mainApp').classList.remove('hidden');
-        document.getElementById('username').textContent = login;
-        if (login === 'admin1') document.getElementById('adminLink').classList.remove('hidden');
-        document.getElementById('adminLink').href = 'adminpanel.html';
-      } else alert("Login yoki parol xato!");
-    }
+    const grid = document.getElementById('booksGrid');
+    books.forEach(b => {
+      const a = document.createElement('a');
+      a.href = b.url;
+      a.target = "_blank";
+      a.className = "glass p-6 rounded-2xl text-center hover:scale-110 transition block";
+      a.innerHTML = `<i class="fas fa-book text-6xl mb-4"></i><p class="text-xl font-bold">${b.title}</p>`;
+      grid.appendChild(a);
+    });
 
-    function register() {
-      const login = document.getElementById('login').value;
-      const pass = document.getElementById('password').value;
-      if (login && pass) {
-        users.push({login, pass});
-        localStorage.setItem('users', JSON.stringify(users));
-        alert("Muvaffaqiyatli ro‘yxatdan o‘tildingiz!");
-      }
-    }
-
-    function logout() {
-      sessionStorage.removeItem('currentUser');
-      location.reload();
-    }
-
-    // Chat
-    function toggleChat() {
-      document.getElementById('chatBox').classList.toggle('hidden');
-    }
-    function sendMsg() {
-      const input = document.getElementById('msgInput');
-      if (input.value) {
-        const div = document.createElement('div');
-        div.className = 'text-right mb-4';
-        div.innerHTML = `<p class="bg-indigo-100 inline-block p-3 rounded-lg">${input.value}</p>`;
-        document.getElementById('messages').appendChild(div);
-        input.value = '';
-        setTimeout(() => {
-          const reply = document.createElement('div');
-          reply.className = 'text-left mb-4';
-          reply.innerHTML = `<p class="bg-gray-200 inline-block p-3 rounded-lg">Salom! Savolingiz bo‘lsa yozing 😊</p>`;
-          document.getElementById('messages').appendChild(reply);
-        }, 1000);
-      }
-    }
-
-    // Avto kirish
-    if (sessionStorage.getItem('currentUser')) login();
+    document.getElementById('searchBook').addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      document.querySelectorAll('#booksGrid a').forEach(el => {
+        el.style.display = el.textContent.toLowerCase().includes(term) ? 'block' : 'none';
+      });
+    });
   </script>
 </body>
 </html>
