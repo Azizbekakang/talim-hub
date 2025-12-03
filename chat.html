@@ -1,19 +1,62 @@
 <!DOCTYPE html>
-<html lang="uz"><head><meta charset="UTF-8"><title>Chat</title><script src="https://cdn.tailwindcss.com"></script></head>
-<body class="bg-gray-900 text-white min-h-screen p-6">
-<div class="container mx-auto max-w-2xl">
-  <h1 class="text-5xl font-bold text-center mb-10 text-yellow-400">O‘QITUVCHI BILAN CHAT</h1>
-  <input id="id" placeholder="Foydalanuvchi ID kiriting" class="w-full p-5 rounded-xl text-black text-xl mb-6">
-  <button onclick="openChat()" class="w-full bg-green-600 py-5 rounded-xl text-2xl font-bold">CHAT OCHISH</button>
-  <div id="chat" class="hidden mt-10 bg-white/10 rounded-3xl p-6 h-96 overflow-y-auto"></div>
-</div>
-<script>
-function openChat(){
-  const id = document.getElementById('id').value;
-  if(id){
-    document.getElementById('chat').classList.remove('hidden');
-    document.getElementById('chat').innerHTML += `<p class="text-green-400">Siz ${id} bilan suhbatdasiz</p>`;
-  }
-}
-</script>
-</body></html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat | Talim Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-600 to-purple-800 min-h-screen p-8 text-white">
+  <div class="container mx-auto max-w-md">
+    <h1 class="text-5xl font-bold text-center mb-10 text-yellow-300">O‘QITUVCHI BILAN CHAT</h1>
+    <input id="userId" placeholder="Foydalanuvchi ID kiriting" class="w-full p-4 rounded-xl bg-white/20 text-white placeholder-white/70 mb-6">
+    <button onclick="checkUser()" class="w-full bg-green-600 py-5 rounded-xl text-2xl font-bold hover:bg-green-500">TEKSHIRISH</button>
+
+    <div id="userInfo" class="hidden mt-6 bg-white/10 p-6 rounded-2xl">
+      <p class="text-2xl font-bold mb-4">Foydalanuvchi BOR!</p>
+      <p id="userDetails" class="text-lg"></p>
+    </div>
+
+    <div id="chatBox" class="hidden mt-6 bg-white/10 p-6 rounded-2xl h-64 overflow-y-auto"></div>
+    <input id="message" placeholder="Xabar yozing" class="hidden w-full p-4 rounded-xl bg-white/20 text-white mt-4">
+    <button onclick="sendMessage()" class="hidden w-full bg-blue-600 py-5 rounded-xl text-2xl font-bold mt-4">YUBORISH</button>
+  </div>
+
+  <script>
+    const users = JSON.parse(localStorage.getItem('talimhub_users') || '[]');
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+
+    function checkUser() {
+      const id = document.getElementById('userId').value.trim();
+      if (!id) return alert("ID kiriting!");
+
+      const found = users.find(u => u.id === +id);
+      if (found) {
+        document.getElementById('userInfo').classList.remove('hidden');
+        let details = `Ismi: ${found.name}<br>Telefon: ${found.phone}<br>Email: ${found.email}`;
+        if (currentUser.role === 'admin') {
+          details += `<br>Pass (admin uchun): ${found.pass}<br>Role: ${found.role}`;
+        }
+        document.getElementById('userDetails').innerHTML = details;
+
+        document.getElementById('chatBox').classList.remove('hidden');
+        document.getElementById('message').classList.remove('hidden');
+        document.getElementById('chatBox').innerHTML += `<p class="text-green-300">Chat ${found.name} bilan ochildi!</p>`;
+      } else {
+        alert("Foydalanuvchi topilmadi!");
+      }
+    }
+
+    function sendMessage() {
+      const msg = document.getElementById('message').value.trim();
+      if (!msg) return;
+      document.getElementById('chatBox').innerHTML += `<p class="text-right bg-blue-500 p-4 rounded-xl mb-4">${msg}</p>`;
+      document.getElementById('message').value = '';
+      // Admin yoki o‘qituvchiga javob simulatsiyasi
+      setTimeout(() => {
+        document.getElementById('chatBox').innerHTML += `<p class="text-left bg-gray-600 p-4 rounded-xl mb-4">Javob: Rahmat savolingiz uchun!</p>`;
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
