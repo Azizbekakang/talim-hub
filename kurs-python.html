@@ -3,75 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Python Darslari</title>
+  <title>Python Kursi | Talim Hub 2025</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
   <style>
     body {
-      margin: 0;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #e2e8f0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      color: #fff;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      backdrop-filter: blur(6px);
     }
-
-    h1 {
-      margin-bottom: 10px;
-      font-size: 2em;
+    .lesson-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 24px;
+      margin: 20px auto;
+      max-width: 900px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      transition: all 0.4s;
     }
-
-    .lesson {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 20px;
-      margin: 20px 0;
-      width: 100%;
-      max-width: 700px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    .locked {
+      opacity: 0.6;
+      pointer-events: none;
+      position: relative;
     }
-
-    iframe {
-      width: 100%;
-      height: 300px;
+    .locked::after {
+      content: "QULF";
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 4rem;
+      color: #fbbf24;
+      font-weight: bold;
+      text-shadow: 0 0 20px #000;
+    }
+    .btn {
+      padding: 12px 24px;
       border: none;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
-
-    .question {
-      margin: 10px 0;
-    }
-
-    .answers button {
-      margin: 5px;
-      padding: 8px 12px;
-      border: none;
-      border-radius: 6px;
-      background-color: #ffffff22;
-      color: #fff;
+      border-radius: 20px;
+      background: #fbbf24;
+      color: #000;
+      font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: 0.3s;
     }
-
-    .answers button:hover {
-      background-color: #ffffff44;
+    .btn:hover { background: #facc15; transform: scale(1.05); }
+    .correct { background: #22c55e !important; }
+    .wrong { background: #ef4444 !important; }
+    .progress-bar {
+      height: 12px;
+      background: #334155;
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 20px 0;
     }
-
-    .correct {
-      background-color: #4caf50 !important;
-    }
-
-    .wrong {
-      background-color: #f44336 !important;
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22c55e, #3b82f6);
+      width: 0%;
+      transition: width 0.8s ease;
     }
   </style>
 </head>
-<body>
-  <h1>Python Darslari</h1>
-  <div id="lessons"></div>
+<body class="p-6">
+
+  <div class="max-w-5xl mx-auto">
+    <h1 class="text-5xl font-bold text-center mb-8 text-yellow-400">
+      Python 0 dan Pro gacha
+    </h1>
+
+    <!-- Progress -->
+    <div class="text-center mb-10">
+      <p class="text-2xl mb-4">Kurs bajarilishi: <span id="progressText">0%</span></p>
+      <div class="progress-bar">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+    </div>
+
+    <div id="lessonsContainer"></div>
+  </div>
 
   <script>
     const lessons = [
@@ -82,14 +93,14 @@
         questions: [
           {q: "Python qachon yaratilgan?", a: ["1985", "1991", "2000"], c: 1},
           {q: "Python yaratuvchisi kim?", a: ["Bill Gates", "Guido van Rossum", "Linus Torvalds"], c: 1},
-          {q: "Pythonning fayl kengaytmasi nima?", a: [".java", ".py", ".js"], c: 1},
+          {q: "Pythonning fayl kengaytmasi?", a: [".java", ".py", ".js"], c: 1},
           {q: "print() nima qiladi?", a: ["Kiritadi", "Chiqaradi", "O‘chadi"], c: 1},
           {q: "Python case-sensitive tilmi?", a: ["Yo‘q", "Ha"], c: 1},
-          {q: "Pythonning ramzi nima?", a: ["Ilon", "Qush", "Koptok"], c: 0},
-          {q: "Python qaysi kompaniya tomonidan boshqariladi?", a: ["Google", "Python Software Foundation", "Microsoft"], c: 1},
+          {q: "Pythonning ramzi?", a: ["Ilon", "Qush", "Koptok"], c: 0},
+          {q: "Python qaysi tashkilot tomonidan boshqariladi?", a: ["Google", "Python Software Foundation", "Microsoft"], c: 1},
           {q: "Eng mashhur Python IDE?", a: ["VS Code", "PyCharm", "Jupyter"], c: 0},
           {q: "Python qanday paradigma?", a: ["Faqat OOP", "Ko‘p paradigma"], c: 1},
-          {q: "Pythonning birinchi versiyasi qachon?", a: ["1991", "2000", "1989"], c: 0}
+          {q: "Birinchi versiya qachon?", a: ["1991", "2000", "1989"], c: 0}
         ]
       },
       {
@@ -101,7 +112,7 @@
           {q: "str qanday yoziladi?", a: ["Raqam", "Tirnoq ichida", "Qavs ichida"], c: 1},
           {q: "type(x) nima qaytaradi?", a: ["Qiymat", "Tur", "Xato"], c: 1},
           {q: "float bu nima?", a: ["Butun son", "Kasr son", "Matn"], c: 1},
-          {q: "bool faqat nechta qiymatga ega?", a: ["1 ta", "2 ta", "3 ta"], c: 1},
+          {q: "bool nechta qiymatga ega?", a: ["1 ta", "2 ta", "3 ta"], c: 1},
           {q: "None bu nima?", a: ["0", "Bo‘sh qiymat", "Xato"], c: 1},
           {q: "O‘zgaruvchi nomi qayerdan boshlanadi?", a: ["Raqamdan", "Harfdan yoki _", "Belgidan"], c: 1},
           {q: "x = 5; y = '5'; type(x) == type(y)", a: ["True", "False"], c: 1},
@@ -126,39 +137,134 @@
           {q: "in operator nima qiladi?", a: ["Ro‘yxatda borligini tekshiradi", "Qo‘shadi", "O‘chiradi"], c: 0}
         ]
       }
+      // Keyingi darslarni shu tarzda qo‘shavering...
     ];
-const container = document.getElementById("lessons");
 
-lessons.forEach((lesson, index) => {
-  const div = document.createElement("div");
-  div.className = "lesson";
-  div.innerHTML = `
-    <h2>${lesson.title}</h2>
-    <iframe src="https://www.youtube.com/embed/${lesson.video}" allowfullscreen></iframe>
-    <p>${lesson.text}</p>
-    ${lesson.questions.map((q, i) => `
-      <div class="question">
-        <strong>${i + 1}. ${q.q}</strong>
-        <div class="answers">
-          ${q.a.map((ans, j) => `<button onclick="checkAnswer(this, ${q.c}, ${j})">${ans}</button>`).join("")}
+    // Progressni localStorage dan olish
+    let progress = JSON.parse(localStorage.getItem('python_progress') || '[]'); // [0, 1, 2] — ochilgan darslar
+
+    const container = document.getElementById("lessonsContainer");
+
+    lessons.forEach((lesson, index) => {
+      const isUnlocked = index === 0 || progress.includes(index - 1);
+      const isCompleted = progress.includes(index);
+
+      const div = document.createElement("div");
+      div.className = `lesson-card ${!isUnlocked ? 'locked'}`;
+
+      div.innerHTML = `
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold ${isCompleted ? 'text-green-400' : 'text-yellow-300'}">
+            ${isCompleted ? 'Done' : (isUnlocked ? 'Play' : 'Lock')} ${lesson.title}
+          </h2>
+          ${isCompleted ? '<span class="text-2xl">Completed</span>' : ''}
         </div>
-      </div>
-    `).join("")}
-  `;
-  container.appendChild(div);
-});
 
-window.checkAnswer = function(btn, correctIndex, selectedIndex) {
-  const buttons = btn.parentElement.querySelectorAll("button");
-  buttons.forEach(b => b.disabled = true);
-  if (correctIndex === selectedIndex) {
-    btn.classList.add("correct");
-  } else {
-    btn.classList.add("wrong");
-    buttons[correctIndex].classList.add("correct");
-  }
-};
- </script>
+        ${isUnlocked ? `
+          <iframe src="https://www.youtube.com/embed/${lesson.video}" allowfullscreen class="w-full h-96 rounded-2xl mb-6" allowfullscreen></iframe>
+          <p class="text-lg mb-8 leading-relaxed">${lesson.text}</p>
+
+          <h3 class="text-2xl font-bold mb-6 text-cyan-300">Test (10 savol)</h3>
+          <div id="quiz-${index}" class="space-y-6">
+            ${lesson.questions.map((q, i) => `
+              <div class="bg-white/5 p-6 rounded-xl">
+                <p class="font-semibold text-xl mb-4">${i+1}. ${q.q}</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  ${q.a.map((ans, j) => `
+                    <button class="btn" onclick="selectAnswer(${index}, ${i}, ${j}, ${q.c})">
+                      ${ans}
+                    </button>
+                  `).join("")}
+                </div>
+              </div>
+            `).join("")}
+          </div>
+
+          <div class="mt-8 text-center">
+            <button id="submit-${index}" class="hidden bg-gradient-to-r from-green-500 to-emerald-600 text-black font-bold py-4 px-12 rounded-2xl text-xl" onclick="checkQuiz(${index})">
+              JAVOBNI TEKSHIRISH
+            </button>
+            <p id="result-${index}" class="mt-6 text-3xl font-bold"></p>
+          </div>
+        ` : `
+          <div class="text-center py-20 text-3xl opacity-50">
+            Oldingi darsni tugating!
+          </div>
+        `}
+      `;
+
+      container.appendChild(div);
+    });
+
+    // Javob tanlash
+    window.selectAnswer = function(lessonIdx, qIdx, selected, correct) {
+      const buttons = document.querySelectorAll(`#quiz-${lessonIdx} button`);
+      const submitBtn = document.getElementById(`submit-${lessonIdx}`);
+      
+      // Faqat bitta javob tanlash
+      buttons.forEach(b => b.disabled = false);
+      submitBtn.classList.remove('hidden');
+
+      // To‘g‘ri javobni ko‘rsatish uchun saqlash
+      if (!window.answers) window.answers = {};
+      if (!window.answers[lessonIdx]) window.answers[lessonIdx] = [];
+      window.answers[lessonIdx][qIdx] = selected;
+    };
+
+    // Testni tekshirish
+    window.checkQuiz = function(lessonIdx) {
+      const lesson = lessons[lessonIdx];
+      let correct = 0;
+
+      lesson.questions.forEach((q, i) => {
+        const selected = window.answers?.[lessonIdx]?.[i];
+        const buttons = document.querySelectorAll(`#quiz-${lessonIdx} .grid button`);
+        const btnIndex = i * q.a.length + q.c;
+
+        if (selected === q.c) correct++;
+
+        // Tugmalarni bo‘yash
+        buttons.forEach((b, j) => {
+          if (j % q.a.length === q.c) b.classList.add('correct');
+          else if (j % q.a.length === selected && selected !== q.c) b.classList.add('wrong');
+          b.disabled = true;
+        });
+      });
+
+      const percent = Math.round((correct / lesson.questions.length) * 100);
+      const resultEl = document.getElementById(`result-${lessonIdx}`);
+
+      if (percent >= 80) {
+        resultEl.innerHTML = `Ajoyib! ${percent}% – Dars muvaffaqiyatli yakunlandi!`;
+        resultEl.className = "text-green-400";
+
+        // Progressga qo‘shish
+        if (!progress.includes(lessonIdx)) {
+          progress.push(lessonIdx);
+          localStorage.setItem('python_progress', JSON.stringify(progress));
+          updateProgress();
+          setTimeout(() => location.reload(), 2000); // Yangi dars ochilishi uchun reload
+        }
+      } else {
+        resultEl.innerHTML = `Yana urining! ${percent}% (80% kerak)`;
+        resultEl.className = "text-red-400";
+      }
+    };
+
+    // Progressni yangilash
+    function updateProgress() {
+      const percent = Math.round((progress.length / lessons.length) * 100);
+      document.getElementById('progressText').textContent = percent + '%';
+      document.getElementById('progressFill').style.width = `${percent}%`;
+
+      if (percent === 100) {
+        alert("Tabriklaymiz! Python kursini tugatdingiz! Sertifikat tayyor");
+        window.open('sertifikat.html', '_blank');
+      }
+    }
+
+    // Sahifa yuklanganda progressni ko‘rsatish
+    updateProgress();
+  </script>
 </body>
 </html>
-        
