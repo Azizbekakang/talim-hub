@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kutubxona | Talim Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-600 to-purple-800 min-h-screen p-8 text-white">
+  <div class="container mx-auto">
+    <h1 class="text-5xl font-bold text-center mb-10 text-yellow-300">KUTUBXONA – 30 TA KITOB</h1>
+    <input id="search" placeholder="Kitob izlash..." class="w-full p-4 rounded-xl bg-white/20 text-white placeholder-white/70 mb-6">
+
+    <div id="bookGrid" class="grid md:grid-cols-5 gap-6">
+      <!-- 30 ta kitob avto yuklanadi -->
+    </div>
+  </div>
+
+  <script>
+    const books = [
+      {title: "Python Dasturlash", url: "https://raw.githubusercontent.com/books-by/pdf/python.pdf"},
+      {title: "Web Dasturlash", url: "https://raw.githubusercontent.com/books-by/pdf/web.pdf"},
+      {title: "Ingliz tili A1", url: "https://raw.githubusercontent.com/books-by/pdf/english-a1.pdf"},
+      {title: "Matematika 11", url: "https://raw.githubusercontent.com/books-by/pdf/math11.pdf"},
+      {title: "Fizika 9", url: "https://raw.githubusercontent.com/books-by/pdf/fizika9.pdf"},
+      {title: "Kimyo 10", url: "https://raw.githubusercontent.com/books-by/pdf/kimyo10.pdf"},
+      {title: "IT Asoslari", url: "https://raw.githubusercontent.com/books-by/pdf/it-asoslari.pdf"},
+      {title: "Java Dasturlash", url: "https://raw.githubusercontent.com/books-by/pdf/java.pdf"},
+      {title: "AI Kirish", url: "https://raw.githubusercontent.com/books-by/pdf/ai-kirish.pdf"},
+      {title: "Data Science", url: "https://raw.githubusercontent.com/books-by/pdf/data-science.pdf"},
+      {title: "Cyber Security", url: "https://raw.githubusercontent.com/books-by/pdf/cyber-security.pdf"},
+      {title: "Android Dasturlash", url: "https://raw.githubusercontent.com/books-by/pdf/android.pdf"},
+      {title: "Flutter", url: "https://raw.githubusercontent.com/books-by/pdf/flutter.pdf"},
+      {title: "React JS", url: "https://raw.githubusercontent.com/books-by/pdf/react.pdf"},
+      {title: "Vue JS", url: "https://raw.githubusercontent.com/books-by/pdf/vue.pdf"},
+      {title: "Node JS", url: "https://raw.githubusercontent.com/books-by/pdf/node.pdf"},
+      {title: "SQL Asoslari", url: "https://raw.githubusercontent.com/books-by/pdf/sql.pdf"},
+      {title: "NoSQL", url: "https://raw.githubusercontent.com/books-by/pdf/nosql.pdf"},
+      {title: "Machine Learning", url: "https://raw.githubusercontent.com/books-by/pdf/ml.pdf"},
+      {title: "Deep Learning", url: "https://raw.githubusercontent.com/books-by/pdf/dl.pdf"},
+      {title: "Blockchain", url: "https://raw.githubusercontent.com/books-by/pdf/blockchain.pdf"},
+      {title: "Crypto", url: "https://raw.githubusercontent.com/books-by/pdf/crypto.pdf"},
+      {title: "Game Dev", url: "https://raw.githubusercontent.com/books-by/pdf/game-dev.pdf"},
+      {title: "Unity", url: "https://raw.githubusercontent.com/books-by/pdf/unity.pdf"},
+      {title: "Unreal Engine", url: "https://raw.githubusercontent.com/books-by/pdf/unreal.pdf"},
+      {title: "UI/UX Dizayn", url: "https://raw.githubusercontent.com/books-by/pdf/uiux.pdf"},
+      {title: "Figma", url: "https://raw.githubusercontent.com/books-by/pdf/figma.pdf"},
+      {title: "Adobe XD", url: "https://raw.githubusercontent.com/books-by/pdf/adobe-xd.pdf"},
+      {title: "Photoshop", url: "https://raw.githubusercontent.com/books-by/pdf/photoshop.pdf"},
+      {title: "Illustrator", url: "https://raw.githubusercontent.com/books-by/pdf/illustrator.pdf"},
+    ]; // Haqiqiy linklarni o'zingiz qo‘shing (raw.githubusercontent.com orqali)
+
+    const grid = document.getElementById('bookGrid');
+    books.forEach(b => {
+      grid.innerHTML += `<a href="${b.url}" target="_blank" class="glass p-6 rounded-2xl text-center hover:scale-105 transition shadow-xl">
+        <i class="fas fa-book text-6xl mb-4 text-yellow-300"></i>
+        <p class="text-xl font-bold">${b.title}</p>
+      </a>`;
+    });
+
+    document.getElementById('search').addEventListener('input', e => {
+      const term = e.target.value.toLowerCase();
+      grid.querySelectorAll('a').forEach(el => {
+        el.style.display = el.textContent.toLowerCase().includes(term) ? 'block' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
