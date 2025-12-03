@@ -3,33 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel</title>
+  <title>Admin Panel | Ta'lim Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-900 text-white min-h-screen">
-  <div class="container mx-auto p-10">
-    <h1 class="text-6xl font-bold text-center mb-10">ADMIN PANEL</h1>
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="bg-red-800 p-10 rounded-3xl text-center">
-        <p class="text-7xl font-bold">28,491</p>
-        <p class="text-2xl mt-4">Jami o‘quvchi</p>
+body class="bg-gray-900 text-white min-h-screen p-8">
+  <div class="container mx-auto">
+    <h1 class="text-5xl font-bold text-center mb-10 text-red-300">ADMIN PANEL</h1>
+
+    <div class="grid md:grid-cols-3 gap-6 mb-10">
+      <div class="bg-red-800 p-8 rounded-3xl text-center shadow-2xl">
+        <p class="text-6xl font-bold">200</p>
+        <p class="text-2xl mt-4">Foydalanuvchilar</p>
       </div>
-      <div class="bg-green-800 p-10 rounded-3xl text-center">
-        <p class="text-7xl font-bold">5,891</p>
-        <p class="text-2xl mt-4">Sertifikat berilgan</p>
+      <div class="bg-green-800 p-8 rounded-3xl text-center shadow-2xl">
+        <p class="text-6xl font-bold">98</p>
+        <p class="text-2xl mt-4">Sertifikatlar</p>
       </div>
-      <div class="bg-purple-800 p-10 rounded-3xl text-center">
-        <p class="text-7xl font-bold">92%</p>
-        <p class="text-2xl mt-4">O‘rtacha progress</p>
+      <div class="bg-purple-800 p-8 rounded-3xl text-center shadow-2xl">
+        <p class="text-6xl font-bold">92%</p>
+        <p class="text-2xl mt-4">Progress</p>
       </div>
     </div>
-    <a href="https://azizbekakang.github.io/talim-hub/#" class="block text-center mt-10 text-2xl bg-yellow-500 text-black py-4 rounded-full">Bosh sahifaga</a>
+
+    <h2 class="text-4xl font-bold mb-6">Foydalanuvchilarni boshqarish</h2>
+    <div class="overflow-x-auto bg-white/10 p-6 rounded-3xl shadow-2xl">
+      <table class="w-full text-left text-lg" id="userTable">
+        <thead>
+          <tr class="border-b border-white/20">
+            <th class="p-4">ID</th>
+            <th class="p-4">Ismi</th>
+            <th class="p-4">Telefon</th>
+            <th class="p-4">Email</th>
+            <th class="p-4">Amal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Foydalanuvchilar avto yuklanadi -->
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="text-4xl font-bold mt-10 mb-6">Pullik kurslarni boshqarish</h2>
+    <input id="courseId" placeholder="Kurs ID" class="w-full p-4 rounded-xl bg-white/20 mb-4">
+    <input id="userIdPullik" placeholder="Foydalanuvchi ID" class="w-full p-4 rounded-xl bg-white/20 mb-4">
+    <button onclick="openPullik()" class="bg-green-600 text-white px-12 py-4 rounded-xl font-bold">OCHISH</button>
+    <button onclick="closePullik()" class="bg-red-600 text-white px-12 py-4 rounded-xl font-bold ml-4">BERKITISH</button>
+
+    <h2 class="text-4xl font-bold mt-10 mb-6">Olimpiada qo‘shish</h2>
+    <input id="olimpName" placeholder="Nomi" class="w-full p-4 rounded-xl bg-white/20 mb-4">
+    <input id="olimpStart" placeholder="Boshlanish vaqti (DD.MM.YYYY HH:MM)" class="w-full p-4 rounded-xl bg-white/20 mb-4">
+    <input id="olimpEnd" placeholder="Tugash vaqti" class="w-full p-4 rounded-xl bg-white/20 mb-4">
+    <button onclick="addOlimp()" class="bg-blue-600 text-white px-12 py-4 rounded-xl font-bold">QO‘SHISH</button>
   </div>
 
   <script>
-    if (sessionStorage.getItem('currentUser') !== 'admin1') {
-      alert("Siz admin emassiz!");
-      location.href = 'https://azizbekakang.github.io/talim-hub/#';
+    const users = JSON.parse(localStorage.getItem('talimhub_users') || '[]');
+    const table = document.getElementById('userTable').getElementsByTagBody('tbody')[0];
+    users.forEach(u => {
+      table.innerHTML += `<tr class="border-b border-white/20">
+        <td class="p-4">${u.id}</td>
+        <td class="p-4">${u.name}</td>
+        <td class="p-4">${u.phone}</td>
+        <td class="p-4">${u.email}</td>
+        <td class="p-4"><button class="bg-red-600 text-white px-4 py-2 rounded">O‘chirish</button></td>
+      </tr>`;
+    });
+
+    function openPullik() {
+      alert("Kurs ochildi!");
+      // Logic qo'shing
+    }
+
+    function closePullik() {
+      alert("Kurs berkitildi!");
+      // Logic qo'shing
+    }
+
+    function addOlimp() {
+      alert("Olimpiada qo'shildi!");
+      // Logic qo'shing
+    }
+
+    if (sessionStorage.getItem('currentUser') && JSON.parse(sessionStorage.getItem('currentUser')).role !== 'admin') {
+      alert("Admin emassiz!");
+      location.href = 'index.html';
     }
   </script>
 </body>
