@@ -1,73 +1,214 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ingliz tili A1-C1 | Talim Hub</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ingliz tili A1-C1 | Ta'lim Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: #e2e8f0; min-height: 100vh; font-family: 'Segoe UI', sans-serif; }
+    .lesson-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(12px); border-radius: 20px; padding: 24px; margin: 20px auto; max-width: 900px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); transition: all 0.4s; }
+    .locked { opacity: 0.6; pointer-events: none; position: relative; }
+    .locked::after { content: "QULF"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 5rem; color: #fbbf24; font-weight: bold; }
+    .btn { padding: 12px 24px; border: none; border-radius: 20px; background: #fbbf24; color: #000; font-weight: bold; cursor: pointer; transition: 0.3s; }
+    .btn:hover { background: #facc15; transform: scale(1.05); }
+    .correct { background: #22c55e !important; }
+    .wrong { background: #ef4444 !important; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #10b981, #22c55e); width: 0%; transition: width 0.8s ease; }
+  </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
-
-  <header class="bg-gradient-to-r from-green-600 to-emerald-700 text-white p-6 shadow-lg sticky top-0 z-50">
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-3xl font-bold">Ingliz tili A1 → C1</h1>
-      <a href="https://azizbekakang.github.io/talim-hub/#" class="text-xl hover:underline">Bosh sahifa</a>
+<body class="p-6">
+  <div class="max-w-5xl mx-auto">
+    <h1 class="text-5xl font-bold text-center mb-8 text-yellow-300">INGLIZ TILI A1 → C1</h1>
+    <div class="text-center mb-10">
+      <p class="text-2xl mb-4">Kurs bajarilishi: <span id="progressText">0%</span></p>
+      <div class="h-4 bg-gray-700 rounded-full overflow-hidden"><div id="progressFill" class="progress-fill"></div></div>
     </div>
-  </header>
-
-  <div class="container mx-auto px-6 py-10 grid lg:grid-cols-3 gap-10">
-    <div class="lg:col-span-2 space-y-10">
-      <div class="bg-white rounded-2xl shadow-xl p-8" id="lessonContent">
-        <h2 class="text-4xl font-bold mb-6 text-green-700" id="lessonTitle">1-dars: Hello! How are you?</h2>
-        <div class="aspect-video bg-black rounded-xl overflow-hidden mb-8">
-          <iframe id="videoFrame" class="w-full h-full" src="https://www.youtube.com/embed/M8Gv2nDi5mA" allowfullscreen></iframe>
-        </div>
-        <p class="text-lg leading-relaxed text-gray-700" id="lessonText">
-          Bugun "Hello", "Hi", "How are you?" va javoblarini o‘rganamiz...
-        </p>
-
-        <a href="https://azizbekang.github.io/talim-hub/books/english-full.pdf" target="_blank"
-           class="inline-block mt-8 bg-red-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-red-700">
-          <i class="fas fa-file-pdf"></i> To‘liq Ingliz tili kitobi (PDF)
-        </a>
-
-        <div class="mt-12 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8" id="quizSection">
-          <h3 class="text-3xl font-bold mb-8 text-green-800">Test: <span id="quizTitle">1-dars</span></h3>
-          <div id="questions" class="space-y-8"></div>
-          <button onclick="checkQuiz()" class="mt-10 bg-green-600 text-white px-12 py-5 rounded-xl text-xl font-bold hover:bg-green-700">
-            Tekshirish
-          </button>
-          <p id="quizResult" class="mt-8 text-3xl font-bold"></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Darslar ro‘yxati va progress (xuddi Python va Web kursidagi kabi) -->
-    <div class="bg-white rounded-2xl shadow-xl p-8 sticky top-24">
-      <h3 class="text-2xl font-bold mb-6 text-green-700">Darslar (10 ta)</h3>
-      <div id="lessonList" class="space-y-4"></div>
-      <div class="mt-10 p-8 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-2xl text-center shadow-xl">
-        <p class="text-5xl font-bold" id="progressPercent">0%</p>
-        <p class="text-xl mt-2">Kurs bajarildi</p>
-      </div>
-    </div>
+    <div id="lessonsContainer"></div>
   </div>
 
   <script>
-    // Xuddi kurs-python.html dagi kodning nusxasi — faqat nomlar o‘zgargan
     const lessons = [
-      { title: "1-dars: Hello! How are you?", video: "M8Gv2nDi5mA", text: "Salomlashuv va oddiy suhbat...", questions: [
-        {q:"Hello! javobi nima?",a:["Bye","Hi","No"],c:1},
-        {q:"How are you? → ?",a:["I'm fine","I'm cat","I'm book"],c:0},
-        // ... 8 ta savol
-      ]},
-      { title: "2-dars: My family", video: "zN2Z4Y8tT5c", text: "Oilamni tanishtirish...", questions: [/* 10 ta */] },
-      // qolgan 8 ta dars
+      {
+        title: "1-dars: Salomlashuv va tanishuv (A1)",
+        video: "M8Gv2nDi5mA", // BBC Learning English - Basic English
+        text: "Hello, Hi, How are you?, My name is..., Nice to meet you...",
+        pdf: "https://www.oxfordenglishnow.com/wp-content/uploads/2020/03/English-File-Beginner-4th-Edition-Students-Book.pdf",
+        questions: [
+          {q: "Hello javobi nima?", a: ["Goodbye", "Hi / Hello", "Good night"], c: 1},
+          {q: "How are you? → To‘g‘ri javob?", a: ["I'm fine, thanks", "Yes", "No"], c: 0},
+          {q: "What is your name? → ?", a: ["My name is Azizbek", "I am fine", "Bye"], c: 0},
+          {q: "Good morning qachon aytiladi?", a: ["Ertalab", "Kechqurun", "Tunda"], c: 0},
+          {q: "Thank you → ?", a: ["You're welcome", "Hello", "Sorry"], c: 0},
+          {q: "Nice to meet you → ?", a: ["Nice to meet you too", "Bye", "Thanks"], c: 0},
+          {q: "How old are you?", a: ["I am 25", "Fine", "Good"], c: 0},
+          {q: "Where are you from?", a: ["I am from Uzbekistan", "Good", "Thanks"], c: 0},
+          {q: "Sorry nima degani?", a: ["Kechirasiz", "Rahmat", "Salom"], c: 0},
+          {q: "See you later → ?", a: ["Ko‘rishguncha", "Salom", "Rahmat"], c: 0}
+        ]
+      },
+      {
+        title: "2-dars: Oila va do‘stlar (A1-A2)",
+        video: "dQw4w9WgXcQ", // English Addict with Mr Steve - Family
+        text: "Mother, father, brother, sister, friend, family...",
+        pdf: "https://archive.org/download/english-file-pre-intermediate-4th-edition/English%20File%20Pre-Intermediate%204th%20Edition.pdf",
+        questions: [
+          {q: "Mother inglizcha nima?", a: ["Ota", "Ona", "Aka"], c: 1},
+          {q: "Father → ?", a: ["Ota", "Ona", "Uka"], c: 0},
+          {q: "Brother → ?", a: ["Aka/uka", "Opa/singil", "Do‘st"], c: 0},
+          {q: "Sister → ?", a: ["Opa/singil", "Aka/uka", "Do‘st"], c: 0},
+          {q: "This is my family → ?", a: ["Bu mening oilam", "Bu mening do‘stim", "Bu mening uyim"], c: 0},
+          {q: "How many people in your family?", a: ["Oilangizda nechta odam bor?", "Qalaysiz?", "Yoshingiz necha?"], c: 0},
+          {q: "Best friend → ?", a: ["Eng yaqin do‘st", "Ota", "Ona"], c: 0},
+          {q: "Grandmother → ?", a: ["Buvim", "Bobom", "Amakiv"], c: 0},
+          {q: "He is my brother → ?", a: ["U mening akam/ukam", "U mening dadam", "U mening do‘stim"], c: 0},
+          {q: "We are friends → ?", a: ["Biz do‘stmiz", "Biz oilamiz", "Biz talabamiz"], c: 0}
+        ]
+      },
+      {
+        title: "3-dars: Kunlik hayot va ish (A2-B1)",
+        video: "jNQXAC9IVRw", // BBC Learning English - Daily Routine
+        text: "I wake up at 7, have breakfast, go to work, study English...",
+        pdf: "https://www.cambridgeenglish.org/images/149441-english-unlimited-a2-elementary-coursebook.pdf",
+        questions: [
+          {q: "I wake up at 7 → ?", a: ["Men soat 7 da uyg‘onaman", "Men yotaman", "Men yuvinaman"], c: 0},
+          {q: "Have breakfast → ?", a: ["Nonushta qilish", "Kechki ovqat", "Tushlik"], c: 0},
+          {q: "Go to work → ?", a: ["Ishga borish", "Uyga borish", "Maktabga borish"], c: 0},
+          {q: "What time do you get up?", a: ["Soat nechada turasiz?", "Nima yeysiz?", "Qayerda ishlayasiz?"], c: 0},
+          {q: "I study English every day → ?", a: ["Men har kuni ingliz tili o‘qiyman", "Men har kuni ishlayman", "Men har kuni uxlayman"], c: 0},
+          {q: "In the evening I... → ?", a: ["Kechqurun men...", "Ertalab men...", "Tushda men..."], c: 0},
+          {q: "I work from 9 to 5 → ?", a: ["Men 9 dan 5 gacha ishlayman", "Men 5 da uxlayman", "Men 9 da turaman"], c: 0},
+          {q: "At the weekend I... → ?", a: ["Dam olish kunlari men...", "Dushanba kuni men...", "Juma kuni men..."], c: 0},
+          {q: "Do you like your job?", a: ["Ishingiz yoqadimi?", "Oilangiz yoqadimi?", "Uy hayvoningiz bormi?"], c: 0},
+          {q: "I usually... → ?", a: ["Men odatda...", "Men hech qachon...", "Men har doim..."], c: 0}
+        ]
+      },
+      {
+        title: "4-dars: Ovqat va restoran (B1)",
+        video: "W6tWjO9bL3g", // EnglishClass101 - Ordering Food
+        text: "Can I have the menu?, I’d like chicken, Water please...",
+        pdf: "https://www.macmillanenglish.com/uploads/files/English_Unlimited_B1.pdf",
+        questions: [
+          {q: "Can I have the menu, please? → ?", a: ["Menyuni bera olasizmi?", "Hisobni bering", "Rahmat"], c: 0},
+          {q: "I’d like... → ?", a: ["Men xohlayman...", "Men yemon", "Men bormayman"], c: 0},
+          {q: "A table for two → ?", a: ["Ikki kishi uchun stol", "Bitta kishi", "To‘rt kishi"], c: 0},
+          {q: "Water, please → ?", a: ["Suv bering iltimos", "Choy bering", "Kofe bering"], c: 0},
+          {q: "The bill, please → ?", a: ["Hisobni bering", "Menyu bering", "Rahmat"], c: 0},
+          {q: "Is everything OK? → ?", a: ["Hammasi joyidami?", "Rahmat", "Yo‘q"], c: 0},
+          {q: "Delicious! → ?", a: ["Juda mazali!", "Yomon", "Oddiy"], c: 0},
+          {q: "Can you make it quick? → ?", a: ["Tezroq qila olasizmi?", "Sekinroq", "Yo‘q"], c: 0},
+          {q: "I’m vegetarian → ?", a: ["Men vegetarianman", "Men go‘sht yeyman", "Men baliq yeyman"], c: 0},
+          {q: "Enjoy your meal! → ?", a: ["Yoqimli ishtaha!", "Rahmat", "Xayr"], c: 0}
+        ]
+      },
+      {
+        title: "5-dars: Sayohat va yo‘l (B1-B2)",
+        video: "zZ2i2Z5bU9A", // English Addict - Travel English
+        text: "Where is the airport?, How much is a ticket to London?, I need a hotel...",
+        pdf: "https://www.cambridgeenglish.org/images/153612-english-unlimited-b2-upper-intermediate-coursebook.pdf",
+        questions: [
+          {q: "Where is the airport? → ?", a: ["Aeroport qayerda?", "Mashina qayerda?", "Poyezd qayerda?"], c: 0},
+          {q: "How much is a ticket to Tashkent?", a: ["Toshkentga chipta nechaga?", "Qachon uchadi?", "Qayerdan uchadi?"], c: 0},
+          {q: "I need a hotel → ?", a: ["Menga mehmonxona kerak", "Menga taksi kerak", "Menga ovqat kerak"], c: 0},
+          {q: "Check-in desk → ?", a: ["Ro‘yxatdan o‘tish joyi", "Chiqish joyi", "Kutish zali"], c: 0},
+          {q: "My flight is at 8 PM → ?", a: ["Mening reysim kechki 8 da", "Ertalab 8 da", "Tushda 8 da"], c: 0},
+          {q: "Can I have window seat? → ?", a: ["Deraza yonida joy bera olasizmi?", "Koridor yonida", "O‘rtada"], c: 0},
+          {q: "Passport control → ?", a: ["Pasport nazorati", "Bagaj olish", "Chiqish"], c: 0},
+          {q: "How long is the flight?", a: ["Parvoz qancha davom etadi?", "Qancha odam bor?", "Qancha bagaj?"], c: 0},
+          {q: "Have a nice trip! → ?", a: ["Yo‘l ochiq bo‘lsin!", "Xayr", "Salom"], c: 0},
+          {q: "Welcome to Uzbekistan! → ?", a: ["O‘zbekistonga xush kelibsiz!", "Xayr", "Rahmat"], c: 0}
+        ]
+      }
     ];
 
-    // Barcha funksiyalar (loadLesson, checkQuiz, updateLessonList) — yuqoridagi kurs-web.html dagi bilan 100% bir xil
-    // Kerak bo‘lsa to‘liq kodini yuboraman
+    let progress = JSON.parse(localStorage.getItem('english_progress') || '[]');
+    const container = document.getElementById("lessonsContainer");
+
+    lessons.forEach((lesson, i) => {
+      const unlocked = i === 0 || progress.includes(i - 1);
+      const completed = progress.includes(i);
+
+      const div = document.createElement("div");
+      div.className = `lesson-card ${!unlocked ? 'locked' : ''}`;
+      div.innerHTML = `
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold ${completed ? 'text-green-400' : 'text-yellow-300'}">
+            ${completed ? 'Done' : (unlocked ? 'Play' : 'Lock')} ${lesson.title}
+          </h2>
+        </div>
+        ${unlocked ? `
+          <iframe src="https://www.youtube.com/embed/${lesson.video}" class="w-full h-96 rounded-2xl mb-6" allowfullscreen></iframe>
+          <p class="text-lg mb-6 leading-relaxed">${lesson.text}</p>
+          <a href="${lesson.pdf}" target="_blank" class="inline-block bg-red-600 hover:bg-red-500 text-white font-bold py-4 px-8 rounded-xl mb-8">
+            PDF KITOB YUKLASH
+          </a>
+          <h3 class="text-2xl font-bold mb-6 text-cyan-300">Test (10 savol)</h3>
+          <div id="quiz-${i}" class="space-y-6">
+            ${lesson.questions.map((q, j) => `
+              <div class="bg-white/10 p-6 rounded-xl">
+                <p class="font-semibold text-xl mb-4">${j+1}. ${q.q}</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  ${q.a.map((ans, k) => `<button class="btn" onclick="select(${i},${j},${k},${q.c})">${ans}</button>`).join("")}
+                </div>
+              </div>
+            `).join("")}
+          </div>
+          <div class="text-center mt-8">
+            <button id="submit-${i}" class="hidden bg-gradient-to-r from-green-500 to-emerald-600 text-black font-bold py-4 px-12 rounded-2xl text-xl" onclick="check(${i})">TEKSHIRISH</button>
+            <p id="result-${i}" class="mt-6 text-3xl font-bold"></p>
+          </div>
+        ` : `<div class="text-center py-32 text-3xl opacity-50">Oldingi darsni tugating!</div>`}
+      `;
+      container.appendChild(div);
+    });
+
+    window.select = function(l, q, s, c) {
+      document.getElementById(`submit-${l}`).classList.remove('hidden');
+      if (!window.ans) window.ans = {};
+      if (!window.ans[l]) window.ans[l] = [];
+      window.ans[l][q] = s;
+    };
+
+    window.check = function(idx) {
+      let correct = 0;
+      lessons[idx].questions.forEach((q, i) => {
+        const sel = window.ans[idx][i];
+        if (sel === q.c) correct++;
+        document.querySelectorAll(`#quiz-${idx} .grid button`).forEach((b, j) => {
+          if (j % q.a.length === q.c) b.classList.add('correct');
+          else if (j % q.a.length === sel && sel !== q.c) b.classList.add('wrong');
+          b.disabled = true;
+        });
+      });
+      const percent = Math.round((correct / 10) * 100);
+      const res = document.getElementById(`result-${idx}`);
+      if (percent >= 80) {
+        res.innerHTML = `Ajoyib! ${percent}% – Keyingi dars ochildi!`;
+        res.className = "text-green-400";
+        if (!progress.includes(idx)) {
+          progress.push(idx);
+          localStorage.setItem('english_progress', JSON.stringify(progress));
+          updateProgress();
+          setTimeout(() => location.reload(), 2000);
+        }
+      } else {
+        res.innerHTML = `Yana urining! ${percent}% (80% kerak)`;
+        res.className = "text-red-400";
+      }
+    };
+
+    function updateProgress() {
+      const p = Math.round((progress.length / lessons.length) * 100);
+      document.getElementById('progressText').textContent = p + '%';
+      document.getElementById('progressFill').style.width = p + '%';
+      if (p === 100) {
+        const user = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+        alert(`Tabriklaymiz, ${user.name || "Foydalanuvchi"}!\nIngliz tili kursini muvaffaqiyatli tugatdingiz!`);
+        window.open('sertifikat.html?name=' + encodeURIComponent(user.name || "Talaba") + '&kurs=Ingliz+tili+A1-C1', '_blank');
+      }
+    }
+    updateProgress();
   </script>
 </body>
 </html>
