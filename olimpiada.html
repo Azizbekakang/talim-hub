@@ -1,14 +1,83 @@
 <!DOCTYPE html>
-<html lang="uz"><head><meta charset="UTF-8"><title>Olimpiada</title><script src="https://cdn.tailwindcss.com"></script></head>
-<body class="bg-gradient-to-br from-purple-900 to-pink-900 text-white min-h-screen p-10">
-<h1 class="text-6xl font-bold text-center mb-10 text-yellow-400">OLIMPIADALAR</h1>
-<div class="container mx-auto max-w-4xl">
-  <div class="bg-white/10 backdrop-blur-xl rounded-3xl p-10 shadow-2xl mb-10">
-    <h2 class="text-4xl font-bold mb-4">Matematika Olimpiadasi</h2>
-    <p>Boshlanish: 10-dekabr 10:00</p>
-    <p>Tugash: 10-dekabr 12:00</p>
-    <button class="mt-6 bg-yellow-400 text-black px-12 py-6 rounded-xl text-2xl font-bold">ISHTIROK ETISH</button>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Olimpiadalar | Talim Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: linear-gradient(to bottom, #1e3a8a, #1e40af); color: white; }
+    .olimp-row:hover { transform: translateY(-2px); transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+  </style>
+</head>
+<body class="min-h-screen p-8">
+  <div class="container mx-auto">
+    <h1 class="text-5xl font-bold text-center mb-10 text-yellow-300">OLIMPIADALAR</h1>
+
+    <!-- Boshlanmagan -->
+    <h2 class="text-4xl font-bold mb-6">Boshlanmagan</h2>
+    <div class="overflow-x-auto rounded-3xl bg-white/10 p-6 mb-10">
+      <table class="w-full text-left text-lg">
+        <thead>
+          <tr class="border-b border-white/20">
+            <th class="p-4">Nomi</th>
+            <th class="p-4">Masalalar</th>
+            <th class="p-4">Qatnashuvchilar</th>
+            <th class="p-4">Boshlanish vaqti</th>
+            <th class="p-4">Davomiyligi</th>
+            <th class="p-4">Holati</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="olimp-row border-b border-white/10 cursor-pointer" onclick="joinOlimp('GOAT Contest #2')">
+            <td class="p-4 text-cyan-300">GOAT Contest #2</td>
+            <td class="p-4"> - </td>
+            <td class="p-4"> 297 </td>
+            <td class="p-4">31.12.2025 19:30</td>
+            <td class="p-4">03:00:00</td>
+            <td class="p-4 text-yellow-300">Boshlanmagan</td>
+          </tr>
+          <!-- Yana 5-10 ta qo'shing -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tugagan -->
+    <h2 class="text-4xl font-bold mb-6">Tugagan</h2>
+    <div class="overflow-x-auto rounded-3xl bg-white/10 p-6">
+      <table class="w-full text-left text-lg">
+        <thead>
+          <tr class="border-b border-white/20">
+            <th class="p-4">Nomi</th>
+            <th class="p-4">Masalalar</th>
+            <th class="p-4">Qatnashuvchilar</th>
+            <th class="p-4">Boshlanish vaqti</th>
+            <th class="p-4">Davomiyligi</th>
+            <th class="p-4">Holati</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="olimp-row border-b border-white/10 cursor-pointer" onclick="viewOlimp('Musoqa faqat Python va C++ da')">
+            <td class="p-4 text-cyan-300">Musoqa faqat Python va C++ da</td>
+            <td class="p-4">3</td>
+            <td class="p-4">13</td>
+            <td class="p-4">02.12.2025 12:57</td>
+            <td class="p-4">02:00:00</td>
+            <td class="p-4 text-red-300">Tugagan</td>
+          </tr>
+          <!-- Yana 5-10 ta qo'shing -->
+        </tbody>
+      </table>
+    </div>
   </div>
-  <a href="sertifikat.html" class="block text-center text-3xl bg-green-600 py-6 rounded-xl">1-o‘rin sertifikati</a>
-</div>
-</body></html>
+
+  <script>
+    function joinOlimp(nomi) {
+      alert(nomi + " olimpiadasiga qo'shildingiz!");
+    }
+    function viewOlimp(nomi) {
+      alert(nomi + " olimpiadasi natijalari!");
+    }
+  </script>
+</body>
+</html>
