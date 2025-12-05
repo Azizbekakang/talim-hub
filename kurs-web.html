@@ -132,6 +132,11 @@
             ${completed ? 'Done' : (unlocked ? 'Play' : 'Lock')} ${lesson.title}
           </h2>
         </div>
+        <h2 class="flex items-center text-3xl font-bold ${completed ? 'text-green-400' : 'text-orange-400'}">
+  <img src="rasm_manzili.png" alt="dars rasm" class="w-12 h-12 mr-4 rounded-full"/> 
+  ${completed ? 'Done' : (unlocked ? 'Play' : 'Lock')} ${lesson.title}
+</h2>
+
         ${unlocked ? `
           <iframe src="https://www.youtube.com/embed/${lesson.video}" class="w-full h-96 rounded-2xl mb-6" allowfullscreen></iframe>
           <p class="text-lg mb-8">${lesson.text}</p>
