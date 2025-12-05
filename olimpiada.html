@@ -6,8 +6,23 @@
   <title>Olimpiadalar | Talim Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { background: linear-gradient(to bottom, #1e3a8a, #1e40af); color: white; }
-    .olimp-row:hover { transform: translateY(-2px); transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+    body { 
+      background: linear-gradient(to bottom, #1e3a8a, #1e40af); 
+      color: white; 
+      font-family: 'Segoe UI', sans-serif;
+    }
+    h1, h2 { text-shadow: 0 2px 5px rgba(0,0,0,0.4); }
+
+    table { border-collapse: separate; border-spacing: 0 12px; }
+    th { text-align: left; color: #facc15; }
+    td { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px; }
+    tr:hover td { background: rgba(255,255,255,0.15); cursor: pointer; transform: translateY(-2px); transition: all 0.3s; }
+    .status-boshlanmagan { color: #fbbf24; font-weight: bold; }
+    .status-tugagan { color: #f87171; font-weight: bold; }
+    .status-juriy { color: #22c55e; font-weight: bold; }
+    .table-container { overflow-x: auto; }
+    th:first-child, td:first-child { border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
+    th:last-child, td:last-child { border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
   </style>
 </head>
 <body class="min-h-screen p-8">
@@ -15,57 +30,98 @@
     <h1 class="text-5xl font-bold text-center mb-10 text-yellow-300">OLIMPIADALAR</h1>
 
     <!-- Boshlanmagan -->
-    <h2 class="text-4xl font-bold mb-6">Boshlanmagan</h2>
-    <div class="overflow-x-auto rounded-3xl bg-white/10 p-6 mb-10">
+    <h2 class="text-4xl font-bold mb-6 text-white/90">Boshlanmagan</h2>
+    <div class="table-container rounded-3xl bg-white/10 p-6 mb-10">
       <table class="w-full text-left text-lg">
         <thead>
-          <tr class="border-b border-white/20">
-            <th class="p-4">Nomi</th>
-            <th class="p-4">Masalalar</th>
-            <th class="p-4">Qatnashuvchilar</th>
-            <th class="p-4">Boshlanish vaqti</th>
-            <th class="p-4">Davomiyligi</th>
-            <th class="p-4">Holati</th>
+          <tr>
+            <th>Nomi</th>
+            <th>Masalalar</th>
+            <th>Qatnashuvchilar</th>
+            <th>Boshlanish vaqti</th>
+            <th>Davomiyligi</th>
+            <th>Holati</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="olimp-row border-b border-white/10 cursor-pointer" onclick="joinOlimp('GOAT Contest #2')">
-            <td class="p-4 text-cyan-300">GOAT Contest #2</td>
-            <td class="p-4"> - </td>
-            <td class="p-4"> 297 </td>
-            <td class="p-4">31.12.2025 19:30</td>
-            <td class="p-4">03:00:00</td>
-            <td class="p-4 text-yellow-300">Boshlanmagan</td>
+          <tr onclick="joinOlimp('GOAT Contest #2')">
+            <td class="text-cyan-300 font-semibold">GOAT Contest #2</td>
+            <td>-</td>
+            <td>297</td>
+            <td>31.12.2025 19:30</td>
+            <td>03:00:00</td>
+            <td class="status-boshlanmagan">Boshlanmagan</td>
           </tr>
-          <!-- Yana 5-10 ta qo'shing -->
+          <tr onclick="joinOlimp('Python Mastery')">
+            <td class="text-cyan-300 font-semibold">Python Mastery</td>
+            <td>5</td>
+            <td>120</td>
+            <td>05.12.2025 14:00</td>
+            <td>02:30:00</td>
+            <td class="status-boshlanmagan">Boshlanmagan</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
     <!-- Tugagan -->
-    <h2 class="text-4xl font-bold mb-6">Tugagan</h2>
-    <div class="overflow-x-auto rounded-3xl bg-white/10 p-6">
+    <h2 class="text-4xl font-bold mb-6 text-white/90">Tugagan</h2>
+    <div class="table-container rounded-3xl bg-white/10 p-6 mb-10">
       <table class="w-full text-left text-lg">
         <thead>
-          <tr class="border-b border-white/20">
-            <th class="p-4">Nomi</th>
-            <th class="p-4">Masalalar</th>
-            <th class="p-4">Qatnashuvchilar</th>
-            <th class="p-4">Boshlanish vaqti</th>
-            <th class="p-4">Davomiyligi</th>
-            <th class="p-4">Holati</th>
+          <tr>
+            <th>Nomi</th>
+            <th>Masalalar</th>
+            <th>Qatnashuvchilar</th>
+            <th>Boshlanish vaqti</th>
+            <th>Davomiyligi</th>
+            <th>Holati</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="olimp-row border-b border-white/10 cursor-pointer" onclick="viewOlimp('Musoqa faqat Python va C++ da')">
-            <td class="p-4 text-cyan-300">Musoqa faqat Python va C++ da</td>
-            <td class="p-4">3</td>
-            <td class="p-4">13</td>
-            <td class="p-4">02.12.2025 12:57</td>
-            <td class="p-4">02:00:00</td>
-            <td class="p-4 text-red-300">Tugagan</td>
+          <tr onclick="viewOlimp('Musoqa faqat Python va C++ da')">
+            <td class="text-cyan-300 font-semibold">Musoqa faqat Python va C++ da</td>
+            <td>3</td>
+            <td>13</td>
+            <td>02.12.2025 12:57</td>
+            <td>02:00:00</td>
+            <td class="status-tugagan">Tugagan</td>
           </tr>
-          <!-- Yana 5-10 ta qo'shing -->
+          <tr onclick="viewOlimp('Math Olympiad')">
+            <td class="text-cyan-300 font-semibold">Math Olympiad</td>
+            <td>7</td>
+            <td>45</td>
+            <td>28.11.2025 09:00</td>
+            <td>03:30:00</td>
+            <td class="status-tugagan">Tugagan</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Hozirgi -->
+    <h2 class="text-4xl font-bold mb-6 text-white/90">Hozirgi</h2>
+    <div class="table-container rounded-3xl bg-white/10 p-6 mb-10">
+      <table class="w-full text-left text-lg">
+        <thead>
+          <tr>
+            <th>Nomi</th>
+            <th>Masalalar</th>
+            <th>Qatnashuvchilar</th>
+            <th>Boshlanish vaqti</th>
+            <th>Davomiyligi</th>
+            <th>Holati</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onclick="viewOlimp('Robot Contest 2025')">
+            <td class="text-cyan-300 font-semibold">Robot Contest 2025</td>
+            <td>10</td>
+            <td>150</td>
+            <td>05.12.2025 16:00</td>
+            <td>04:00:00</td>
+            <td class="status-juriy">Hozirgi</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -73,8 +129,9 @@
 
   <script>
     function joinOlimp(nomi) {
-      alert(nomi + " olimpiadasiga qo'shildingiz!");
+      alert(nomi + " olimpiadasiga muvaffaqiyatli qo'shildingiz!");
     }
+
     function viewOlimp(nomi) {
       alert(nomi + " olimpiadasi natijalari!");
     }
