@@ -1,140 +1,108 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Olimpiadalar | Talim Hub</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { 
-      background: linear-gradient(to bottom, #1e3a8a, #1e40af); 
-      color: white; 
-      font-family: 'Segoe UI', sans-serif;
-    }
-    h1, h2 { text-shadow: 0 2px 5px rgba(0,0,0,0.4); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olimpiada — TalimHub</title>
+<link rel="icon" type="image/png" href="https://i.postimg.cc/3rgW5f0s/logo.png">
 
-    table { border-collapse: separate; border-spacing: 0 12px; }
-    th { text-align: left; color: #facc15; }
-    td { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px; }
-    tr:hover td { background: rgba(255,255,255,0.15); cursor: pointer; transform: translateY(-2px); transition: all 0.3s; }
-    .status-boshlanmagan { color: #fbbf24; font-weight: bold; }
-    .status-tugagan { color: #f87171; font-weight: bold; }
-    .status-juriy { color: #22c55e; font-weight: bold; }
-    .table-container { overflow-x: auto; }
-    th:first-child, td:first-child { border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
-    th:last-child, td:last-child { border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
-  </style>
+<style>
+    body { font-family: Arial,sans-serif;background:#eef2ff;margin:0; }
+    header { background:#0048ff;padding:14px;color:white;font-size:23px;text-align:center;font-weight:bold; }
+    .container { max-width:800px;margin:20px auto;background:#fff;padding:20px;border-radius:10px; }
+    .question { margin-bottom:20px;font-size:18px; }
+    input[type="text"] { width:100%;padding:10px;font-size:15px;border:1px solid gray;border-radius:6px;margin-top:8px; }
+    button { width:100%;background:#0048ff;color:white;border:none;padding:12px;font-size:17px;border-radius:6px;margin-top:15px;cursor:pointer; }
+    button:hover { background:#002ea3; }
+    #resultBox { margin-top:20px;padding:10px;font-size:18px;font-weight:bold;border-radius:6px;display:none; }
+    .score { background:#00b700;color:white; }
+    .ranking { background:#ffb700;color:black;margin-top:20px;padding:15px;border-radius:6px; }
+    table { width:100%;margin-top:10px;border-collapse:collapse; }
+    td,th { border:1px solid gray;padding:8px;text-align:center; }
+    th { background:#0048ff;color:white; }
+</style>
 </head>
-<body class="min-h-screen p-8">
-  <div class="container mx-auto">
-    <h1 class="text-5xl font-bold text-center mb-10 text-yellow-300">OLIMPIADALAR</h1>
 
-    <!-- Boshlanmagan -->
-    <h2 class="text-4xl font-bold mb-6 text-white/90">Boshlanmagan</h2>
-    <div class="table-container rounded-3xl bg-white/10 p-6 mb-10">
-      <table class="w-full text-left text-lg">
-        <thead>
-          <tr>
-            <th>Nomi</th>
-            <th>Masalalar</th>
-            <th>Qatnashuvchilar</th>
-            <th>Boshlanish vaqti</th>
-            <th>Davomiyligi</th>
-            <th>Holati</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr onclick="joinOlimp('GOAT Contest #2')">
-            <td class="text-cyan-300 font-semibold">GOAT Contest #2</td>
-            <td>-</td>
-            <td>297</td>
-            <td>31.12.2025 19:30</td>
-            <td>03:00:00</td>
-            <td class="status-boshlanmagan">Boshlanmagan</td>
-          </tr>
-          <tr onclick="joinOlimp('Python Mastery')">
-            <td class="text-cyan-300 font-semibold">Python Mastery</td>
-            <td>5</td>
-            <td>120</td>
-            <td>05.12.2025 14:00</td>
-            <td>02:30:00</td>
-            <td class="status-boshlanmagan">Boshlanmagan</td>
-          </tr>
-        </tbody>
-      </table>
+<body>
+
+<header>TalimHub — Olimpiada</header>
+
+<div class="container">
+
+    <div id="test"></div>
+
+    <button onclick="finish()">Yakunlash</button>
+
+    <div id="resultBox"></div>
+    <div id="rankBox" class="ranking" style="display:none;">
+        <h3>Reyting</h3>
+        <table id="rankTable">
+            <tr><th>Foydalanuvchi</th><th>Ballo</th></tr>
+        </table>
     </div>
 
-    <!-- Tugagan -->
-    <h2 class="text-4xl font-bold mb-6 text-white/90">Tugagan</h2>
-    <div class="table-container rounded-3xl bg-white/10 p-6 mb-10">
-      <table class="w-full text-left text-lg">
-        <thead>
-          <tr>
-            <th>Nomi</th>
-            <th>Masalalar</th>
-            <th>Qatnashuvchilar</th>
-            <th>Boshlanish vaqti</th>
-            <th>Davomiyligi</th>
-            <th>Holati</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr onclick="viewOlimp('Musoqa faqat Python va C++ da')">
-            <td class="text-cyan-300 font-semibold">Musoqa faqat Python va C++ da</td>
-            <td>3</td>
-            <td>13</td>
-            <td>02.12.2025 12:57</td>
-            <td>02:00:00</td>
-            <td class="status-tugagan">Tugagan</td>
-          </tr>
-          <tr onclick="viewOlimp('Math Olympiad')">
-            <td class="text-cyan-300 font-semibold">Math Olympiad</td>
-            <td>7</td>
-            <td>45</td>
-            <td>28.11.2025 09:00</td>
-            <td>03:30:00</td>
-            <td class="status-tugagan">Tugagan</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+</div>
 
-    <!-- Hozirgi -->
-    <h2 class="text-4xl font-bold mb-6 text-white/90">Hozirgi</h2>
-    <div class="table-container rounded-3xl bg-white/10 p-6 mb-10">
-      <table class="w-full text-left text-lg">
-        <thead>
-          <tr>
-            <th>Nomi</th>
-            <th>Masalalar</th>
-            <th>Qatnashuvchilar</th>
-            <th>Boshlanish vaqti</th>
-            <th>Davomiyligi</th>
-            <th>Holati</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr onclick="viewOlimp('Robot Contest 2025')">
-            <td class="text-cyan-300 font-semibold">Robot Contest 2025</td>
-            <td>10</td>
-            <td>150</td>
-            <td>05.12.2025 16:00</td>
-            <td>04:00:00</td>
-            <td class="status-juriy">Hozirgi</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<script>
+    // === 100 TA SAVOLNI BU YERDA BELGILAYSAN ===
+    // Format: ["Savol matni", "Javob"]
+    const questions = [
+        ["1) If x + 5 = 12, find x.", "7"],
+        ["2) 15 × 2 = ?", "30"],
+        ["3) 100 / 4 = ?", "25"]
+        // 3ta misol qo‘yib berdim, qolganini sen qo‘shaverasan…
+        // 100 tagacha faqat shu ko‘rinishda davom ettirasan.
+    ];
 
-  <script>
-    function joinOlimp(nomi) {
-      alert(nomi + " olimpiadasiga muvaffaqiyatli qo'shildingiz!");
+    // === TESTNI EKRANGA CHIQARISH ===
+    let html = "";
+    for (let i = 0; i < questions.length; i++) {
+        html += 
+            <div class="question">
+                ${questions[i][0]}
+                <input type="text" id="q${i}">
+            </div>;
+    }
+    document.getElementById("test").innerHTML = html;
+
+    // === YAKUNDA BALL HISOBLASH VA REYTINGGA KIRITISH ===
+    function finish() {
+        let score = 0;
+        for (let i = 0; i < questions.length; i++) {
+            let ans = document.getElementById("q" + i).value.trim();
+            if (ans === questions[i][1]) score++;
+        }
+
+        let percent = Math.round((score / questions.length) * 100);
+
+        document.getElementById("resultBox").style.display = "block";
+        document.getElementById("resultBox").className = "score";
+        document.getElementById("resultBox").innerHTML = "Natija: " + score + " / " + questions.length + " (" + percent + "%)";
+
+        // Foydalanuvchi ismini olish
+        let username = prompt("Ismingizni kiriting (Reyting uchun):");
+        if (!username) username = "Anonim";
+
+        // Reytingga saqlash (mahalliy brauzer memory)
+        let data = JSON.parse(localStorage.getItem("ranking") || "[]");
+        data.push({ name: username, score: score });
+        data.sort((a, b) => b.score - a.score);
+        localStorage.setItem("ranking", JSON.stringify(data));
+
+        showRanking();
     }
 
-    function viewOlimp(nomi) {
-      alert(nomi + " olimpiadasi natijalari!");
+    // === REYTINGNI CHIQARISH ===
+    function showRanking() {
+        document.getElementById("rankBox").style.display = "block";
+        let data = JSON.parse(localStorage.getItem("ranking") || "[]");
+        let table = "<tr><th>Foydalanuvchi</th><th>Ballo</th></tr>";
+        for (let r of data) {
+            table += <tr><td>${r.name}</td><td>${r.score}</td></tr>;
+        }
+        document.getElementById("rankTable").innerHTML = table;
     }
-  </script>
+</script>
+
 </body>
 </html>
