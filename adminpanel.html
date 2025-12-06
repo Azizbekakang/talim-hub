@@ -1,93 +1,86 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel | Ta'lim Hub</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel | Ta'lim Hub</title>
+<link rel="icon" type="image/png" href="logo.png">
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
-body class="bg-gray-900 text-white min-h-screen p-8">
-  <div class="container mx-auto">
-    <h1 class="text-5xl font-bold text-center mb-10 text-red-300">ADMIN PANEL</h1>
 
-    <div class="grid md:grid-cols-3 gap-6 mb-10">
-      <div class="bg-red-800 p-8 rounded-3xl text-center shadow-2xl">
-        <p class="text-6xl font-bold">200</p>
-        <p class="text-2xl mt-4">Foydalanuvchilar</p>
-      </div>
-      <div class="bg-green-800 p-8 rounded-3xl text-center shadow-2xl">
-        <p class="text-6xl font-bold">98</p>
-        <p class="text-2xl mt-4">Sertifikatlar</p>
-      </div>
-      <div class="bg-purple-800 p-8 rounded-3xl text-center shadow-2xl">
-        <p class="text-6xl font-bold">92%</p>
-        <p class="text-2xl mt-4">Progress</p>
-      </div>
-    </div>
+<body class="bg-gray-900 text-white min-h-screen p-8">
 
-    <h2 class="text-4xl font-bold mb-6">Foydalanuvchilarni boshqarish</h2>
-    <div class="overflow-x-auto bg-white/10 p-6 rounded-3xl shadow-2xl">
-      <table class="w-full text-left text-lg" id="userTable">
-        <thead>
-          <tr class="border-b border-white/20">
-            <th class="p-4">ID</th>
-            <th class="p-4">Ismi</th>
-            <th class="p-4">Telefon</th>
-            <th class="p-4">Email</th>
-            <th class="p-4">Amal</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Foydalanuvchilar avto yuklanadi -->
-        </tbody>
-      </table>
-    </div>
+<div class="container mx-auto">
 
-    <h2 class="text-4xl font-bold mt-10 mb-6">Pullik kurslarni boshqarish</h2>
-    <input id="courseId" placeholder="Kurs ID" class="w-full p-4 rounded-xl bg-white/20 mb-4">
-    <input id="userIdPullik" placeholder="Foydalanuvchi ID" class="w-full p-4 rounded-xl bg-white/20 mb-4">
-    <button onclick="openPullik()" class="bg-green-600 text-white px-12 py-4 rounded-xl font-bold">OCHISH</button>
-    <button onclick="closePullik()" class="bg-red-600 text-white px-12 py-4 rounded-xl font-bold ml-4">BERKITISH</button>
+  <h1 class="text-5xl font-bold text-center mb-10 text-red-300">ADMIN PANEL</h1>
 
-    <h2 class="text-4xl font-bold mt-10 mb-6">Olimpiada qo‘shish</h2>
-    <input id="olimpName" placeholder="Nomi" class="w-full p-4 rounded-xl bg-white/20 mb-4">
-    <input id="olimpStart" placeholder="Boshlanish vaqti (DD.MM.YYYY HH:MM)" class="w-full p-4 rounded-xl bg-white/20 mb-4">
-    <input id="olimpEnd" placeholder="Tugash vaqti" class="w-full p-4 rounded-xl bg-white/20 mb-4">
-    <button onclick="addOlimp()" class="bg-blue-600 text-white px-12 py-4 rounded-xl font-bold">QO‘SHISH</button>
-  </div>
+  <!-- ======== OLIMPIADA QO‘SHISH ======== -->
+  <h2 class="text-3xl font-bold mb-4">Olimpiada qo‘shish</h2>
+  <input id="olimpName" placeholder="Olimpiada nomi" class="w-full p-3 rounded-xl bg-white/20 mb-3">
+  <input id="olimpStart" placeholder="Boshlanish: DD.MM.YYYY HH:MM" class="w-full p-3 rounded-xl bg-white/20 mb-3">
+  <input id="olimpEnd" placeholder="Tugash: DD.MM.YYYY HH:MM" class="w-full p-3 rounded-xl bg-white/20 mb-3">
+  <button onclick="addOlimp()" class="bg-blue-600 w-full py-3 rounded-xl font-bold mb-10">QO‘SHISH</button>
 
-  <script>
-    const users = JSON.parse(localStorage.getItem('talimhub_users') || '[]');
-    const table = document.getElementById('userTable').getElementsByTagBody('tbody')[0];
-    users.forEach(u => {
-      table.innerHTML += `<tr class="border-b border-white/20">
-        <td class="p-4">${u.id}</td>
-        <td class="p-4">${u.name}</td>
-        <td class="p-4">${u.phone}</td>
-        <td class="p-4">${u.email}</td>
-        <td class="p-4"><button class="bg-red-600 text-white px-4 py-2 rounded">O‘chirish</button></td>
-      </tr>`;
-    });
+  <!-- ======== MASALA QO‘SHISH ======== -->
+  <h2 class="text-3xl font-bold mb-4">Masala qo‘shish</h2>
+  <select id="olimpSelect" class="w-full p-3 rounded-xl bg-white/20 mb-3"></select>
+  <input id="taskName" placeholder="Masala nomi (A, B, C ... avtomatik)" disabled class="w-full p-3 rounded-xl bg-white/20 mb-3 font-bold">
+  <textarea id="taskText" placeholder="Masala matni" class="w-full p-3 rounded-xl bg-white/20 mb-3"></textarea>
+  <textarea id="taskAns" placeholder="To‘g‘ri javobi" class="w-full p-3 rounded-xl bg-white/20 mb-3"></textarea>
+  <button onclick="addTask()" class="bg-green-600 w-full py-3 rounded-xl font-bold">MASALA QO‘SHISH</button>
 
-    function openPullik() {
-      alert("Kurs ochildi!");
-      // Logic qo'shing
-    }
+</div>
 
-    function closePullik() {
-      alert("Kurs berkitildi!");
-      // Logic qo'shing
-    }
+<script>
+// ===== LocalStorage O‘qish =====
+function getData(){ return JSON.parse(localStorage.getItem('olimpiadas') || '[]'); }
+function saveData(data){ localStorage.setItem('olimpiadas', JSON.stringify(data)); }
 
-    function addOlimp() {
-      alert("Olimpiada qo'shildi!");
-      // Logic qo'shing
-    }
+// ===== Olimpiada qo‘shish =====
+function addOlimp(){
+  let data = getData();
+  data.push({
+    name: document.getElementById('olimpName').value,
+    start: document.getElementById('olimpStart').value,
+    end: document.getElementById('olimpEnd').value,
+    tasks: [],
+    users: []
+  });
+  saveData(data);
+  alert("Olimpiada qo‘shildi!");
+  loadSelect();
+}
 
-    if (sessionStorage.getItem('currentUser') && JSON.parse(sessionStorage.getItem('currentUser')).role !== 'admin') {
-      alert("Admin emassiz!");
-      location.href = 'index.html';
-    }
-  </script>
+// ===== Masala qo‘shish =====
+function addTask(){
+  let data = getData();
+  let idx = document.getElementById('olimpSelect').value;
+  if(idx === "") return alert("Olimpiadani tanlang!");
+
+  let letter = String.fromCharCode(65 + data[idx].tasks.length); // A, B, C...
+  data[idx].tasks.push({
+    name: letter,
+    text: document.getElementById('taskText').value,
+    ans: document.getElementById('taskAns').value
+  });
+  saveData(data);
+  alert("Masala qo‘shildi!");
+  loadSelect();
+}
+
+// ===== Selectni yuklash =====
+function loadSelect(){
+  let data = getData();
+  let s = document.getElementById('olimpSelect');
+  s.innerHTML = "";
+  data.map((o,i)=> s.innerHTML += `<option value="${i}">${o.name}</option>`);
+  let idx = s.value;
+  if(idx!=="") document.getElementById('taskName').value = 
+     String.fromCharCode(65 + data[idx].tasks.length);
+}
+
+loadSelect();
+</script>
+
 </body>
 </html>
